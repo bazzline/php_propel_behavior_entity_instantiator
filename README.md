@@ -12,8 +12,7 @@ The scrutinizer status are:
 [![code quality](https://scrutinizer-ci.com/g/bazzline/php_propel_behavior_entity_instantiator/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/bazzline/php_propel_behavior_entity_instantiator/) | [![build status](https://scrutinizer-ci.com/g/bazzline/php_propel_behavior_entity_instantiator/badges/build.png?b=master)](https://scrutinizer-ci.com/g/bazzline/php_propel_behavior_entity_instantiator/)
 
 The versioneye status is:
-@todo - update
-[![dependencies](https://www.versioneye.com/user/projects/55be795c653762002000209a/badge.svg?style=flat)](https://www.versioneye.com/user/projects/55be795c653762002000209a)
+[![dependencies](https://www.versioneye.com/user/projects/55e3222ffeb8cd1a50000958/badge.svg?style=flat)](https://www.versioneye.com/user/projects/55e3222ffeb8cd1a50000958)
 
 Downloads:
 [![Downloads this Month](https://img.shields.io/packagist/dm/net_bazzline/php_propel_behavior_entity_instantiator.svg)](https://packagist.org/packages/net_bazzline/php_propel_behavior_entity_instantiator)
@@ -137,7 +136,7 @@ propel.behavior.create_entity_instantiator.class = lib.vendor.net_bazzline.php_p
 
 # API 
 
-[API](http://bazzline.net/2eafe1bfd5db29029fbe3c3fc94eddeaa6433b47/index.html) available at [bazzline.net](http://www.bazzline.net)
+[API](http://bazzline.net/eb1538eb38f9635c0b1a1d47b020205681b7b569/index.html) available at [bazzline.net](http://www.bazzline.net)
 
 # History
 

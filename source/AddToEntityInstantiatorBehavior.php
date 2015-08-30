@@ -135,9 +135,11 @@ class AddToEntityInstantiatorBehavior extends Behavior
 
         if ($generator->isNotConfigured()) {
             $pathToOutput   = $this->parameters[self::PARAMETER_ENTITY_INSTANTIATOR_PATH_TO_OUTPUT];
-            $isAbsolutePath = (strncmp($pathToOutput, DIRECTORY_SEPARATOR, strlen(DIRECTORY_SEPARATOR)) === 0);
+            $isAbsolutePath = (strncmp($pathToOutput, DIRECTORY_SEPARATOR, strlen(DIRECTORY_SEPARATOR)) === 0);    //like /foo/bar
+            $isResource     = (strpos($pathToOutput, '://') !== false);  //like vfs://
+            $isAbsolutePathOrResource = ($isAbsolutePath || $isResource);
 
-            $absolutePathToOutput   = ($isAbsolutePath)
+            $absolutePathToOutput   = ($isAbsolutePathOrResource)
                 ? $pathToOutput
                 : getcwd() . (str_repeat(DIRECTORY_SEPARATOR . '..', 4)) . DIRECTORY_SEPARATOR . $pathToOutput;
             $className      = $this->parameters[self::PARAMETER_ENTITY_INSTANTIATOR_CLASS_NAME];
@@ -156,7 +158,7 @@ class AddToEntityInstantiatorBehavior extends Behavior
     private function addIt()
     {
         return (isset($this->parameters[self::PARAMETER_ENTITY_ADD_IT_TO_ENTITY_INSTANTIATOR]))
-            ? $this->parameters[self::PARAMETER_ENTITY_ADD_IT_TO_ENTITY_INSTANTIATOR]
+            ? ($this->parameters[self::PARAMETER_ENTITY_ADD_IT_TO_ENTITY_INSTANTIATOR] === 'true')
             : false;
     }
 }

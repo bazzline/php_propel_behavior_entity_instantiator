@@ -135,7 +135,7 @@ class EntityInstantiatorGenerator
         $hasNamespace   = !(is_null($namespace));
         $content        = '<?php';
         $content       .= ($hasNamespace)
-            ? str_repeat(PHP_EOL, 2) . 'namespace ' . $this->namespace . PHP_EOL
+            ? str_repeat(PHP_EOL, 2) . 'namespace ' . $this->namespace . ';' . PHP_EOL
             : PHP_EOL;
 
 //@todo find a better way to have it indented and readable
@@ -159,7 +159,7 @@ class ' . $className . '
 ';
 
         foreach ($collection as $entity) {
-            $methodName = 'create' . ucfirst($entity->methodNamePrefix() . ucfirst($entity->methodName()));
+            $methodName = lcfirst($entity->methodNamePrefix() . ucfirst($entity->methodName()));
             $content   .= PHP_EOL .
                 $indention . '/**' . PHP_EOL .
                 $indention . ' * @return \\' . $entity->fullQualifiedClassName() . PHP_EOL .
