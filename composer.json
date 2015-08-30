@@ -1,0 +1,27 @@
+{
+    "name": "net_bazzline/php_propel_behavior_entity_instantiator",
+    "description": "This free as in freedom behavior that easy up entity instantiation for propel",
+    "keywords": ["propel", "behavior", "entity", "instantiator", "php", "lgpl", "free as in freedom"],
+    "type": "library",
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=5.3.3",
+        "propel/propel1": "~1.6"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "4.8.*",
+        "mikey179/vfsStream": "1.5.*"
+    },
+    "license": "LGPLv3",
+    "authors": [
+        {
+            "name": "Stev Leibelt",
+            "email": "artodeto@bazzline.net",
+            "homepage": "https://artodeto.bazzline.net",
+            "role": "Developer"
+        }
+    ],
+    "autoload": {
+        "classmap": ["source/"]
+    }
+}
