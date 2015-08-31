@@ -38,7 +38,6 @@ class EntityInstantiatorGenerator
     {
         //@todo maybe replace by a state machine instance?
         $this->configurationNotDone = true;
-        $this->collection           = new EntityCollection();
         $this->generationDone       = false;
     }
 
@@ -47,7 +46,7 @@ class EntityInstantiatorGenerator
      */
     public function __destruct()
     {
-        if ($this->noGenerationWasDone()) {
+        if ($this->callGenerate()) {
             $this->generate();
         }
     }
@@ -69,15 +68,17 @@ class EntityInstantiatorGenerator
     /**
      * @param string $absolutePathToOutput
      * @param string $className
+     * @param EntityCollection $collection
      * @param null|string $extends
      * @param null|string $indention
      * @param string $namespace
      * @throws InvalidArgumentException
      * @todo maybe put them together in a InstantiatorConfiguration?
      */
-    public function configure($absolutePathToOutput, $className, $extends = null, $indention = null, $namespace)
+    public function configure($absolutePathToOutput, $className, EntityCollection $collection, $extends = null, $indention = null, $namespace)
     {
         $this->setClassName($className);
+        $this->setCollection($collection);
 
         if (!is_null($extends)) {
             $this->setExtends($extends);
@@ -221,6 +222,14 @@ class ' . $className . $extends . '
     }
 
     /**
+     * @param EntityCollection $collection
+     */
+    private function setCollection(EntityCollection $collection)
+    {
+        $this->collection = $collection;
+    }
+
+    /**
      * @param string $extends
      */
     private function setExtends($extends)
@@ -274,6 +283,15 @@ class ' . $className . $extends . '
     private function noGenerationWasDone()
     {
         return (!$this->generationDone);
+    }
+
+    /**
+     * @return bool
+     */
+    private function callGenerate()
+    {
+        return (!$this->configurationNotDone
+            && $this->noGenerationWasDone());
     }
 
     /**

@@ -26,7 +26,7 @@ class AddToEntityInstantiatorBehaviorTest extends PHPUnit_Framework_TestCase
     /** @var string */
     private $prefix;
 
-    public function setUp()
+    protected function setUp()
     {
         //begin of setting runtime environments
         $fileSystem = vfsStream::setup();
@@ -89,12 +89,18 @@ EOF;
         require_once ($path);
     }
 
+    /**
+     * @depends testInstantiatorFileExists
+     */
     public function testInstantiatorClassExists()
     {
         $fullQualifiedClassName = $this->namespace . '\\' . $this->className;
         $this->assertTrue(class_exists($fullQualifiedClassName));
     }
 
+    /**
+     * @depends testInstantiatorClassExists
+     */
     public function testInstantiatorExtendsStdClass()
     {
         $fullQualifiedClassName = $this->namespace . '\\' . $this->className;
@@ -103,6 +109,9 @@ EOF;
         $this->assertInstanceOf('stdClass', $instantiator);
     }
 
+    /**
+     * @depends testInstantiatorClassExists
+     */
     public function testInstantiatorClassHasExpectedMethods()
     {
         $fullQualifiedClassName = $this->namespace . '\\' . $this->className;
@@ -114,6 +123,9 @@ EOF;
         $this->assertContains('createTableOneQuery', $methods);
     }
 
+    /**
+     * @depends testInstantiatorClassHasExpectedMethods
+     */
     public function testThatMethodsReturningRightInstances()
     {
         $fullQualifiedClassName = $this->namespace . '\\' . $this->className;

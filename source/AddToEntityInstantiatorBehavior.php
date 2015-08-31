@@ -1,15 +1,17 @@
 <?php
-
-//@todo do we need this if dependencies are managed via composer and composer autoloader?
-require_once(__DIR__ . DIRECTORY_SEPARATOR . 'AbstractEntity.php');
-require_once(__DIR__ . DIRECTORY_SEPARATOR . 'EntityCollection.php');
-require_once(__DIR__ . DIRECTORY_SEPARATOR . 'EntityInstantiatorGenerator.php');
-require_once(__DIR__ . DIRECTORY_SEPARATOR . 'ObjectEntity.php');
-require_once(__DIR__ . DIRECTORY_SEPARATOR . 'QueryEntity.php');
-
+use Net\Bazzline\Propel\Behavior\EntityInstantiator\EntityCollection;
 use Net\Bazzline\Propel\Behavior\EntityInstantiator\EntityInstantiatorGenerator;
 use Net\Bazzline\Propel\Behavior\EntityInstantiator\ObjectEntity;
 use Net\Bazzline\Propel\Behavior\EntityInstantiator\QueryEntity;
+
+//@todo do we need this if dependencies are managed via composer and composer autoloader?
+$pathToClasses = __DIR__ . '/Net/Bazzline/Propel/Behavior/EntityInstantiator/';
+
+require_once($pathToClasses . 'AbstractEntity.php');
+require_once($pathToClasses . 'EntityCollection.php');
+require_once($pathToClasses . 'EntityInstantiatorGenerator.php');
+require_once($pathToClasses . 'ObjectEntity.php');
+require_once($pathToClasses . 'QueryEntity.php');
 
 /**
  * @author stev leibelt <artodeto@bazzline.net>
@@ -144,11 +146,12 @@ class AddToEntityInstantiatorBehavior extends Behavior
                 ? $pathToOutput
                 : getcwd() . (str_repeat(DIRECTORY_SEPARATOR . '..', 4)) . DIRECTORY_SEPARATOR . $pathToOutput;
             $className      = $this->parameters[self::PARAMETER_ENTITY_INSTANTIATOR_CLASS_NAME];
+            $collection     = new EntityCollection();
             $extends        = $this->parameters[self::PARAMETER_ENTITY_INSTANTIATOR_EXTENDS];
             $indention      = $this->parameters[self::PARAMETER_ENTITY_INSTANTIATOR_INDENTION];
             $namespace      = $this->parameters[self::PARAMETER_ENTITY_INSTANTIATOR_NAMESPACE];
 
-            $generator->configure($absolutePathToOutput, $className, $extends, $indention, $namespace);
+            $generator->configure($absolutePathToOutput, $className, $collection, $extends, $indention, $namespace);
         }
 
         return $generator;
