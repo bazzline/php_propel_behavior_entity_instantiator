@@ -73,7 +73,7 @@ class EntityCollection implements ArrayAccess, Countable, Iterator
     /**
      * Offset to retrieve
      * @link http://php.net/manual/en/arrayaccess.offsetget.php
-     * @param mixed $offset <p>
+     * @param mixed|AbstractEntity $offset <p>
      * The offset to retrieve.
      * </p>
      * @return mixed Can return all value types.
@@ -92,7 +92,7 @@ class EntityCollection implements ArrayAccess, Countable, Iterator
      * @param mixed $offset <p>
      * The offset to assign the value to.
      * </p>
-     * @param mixed $value <p>
+     * @param mixed|AbstractEntity $value <p>
      * The value to set.
      * </p>
      * @return void
@@ -143,7 +143,7 @@ class EntityCollection implements ArrayAccess, Countable, Iterator
     /**
      * Return the current element
      * @link http://php.net/manual/en/iterator.current.php
-     * @return mixed Can return any type.
+     * @return mixed|AbstractEntity Can return any type.
      * @since 5.0.0
      */
     public function current()

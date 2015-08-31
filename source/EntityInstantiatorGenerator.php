@@ -13,7 +13,7 @@ class EntityInstantiatorGenerator
     /** @var string */
     private $className;
 
-    /** @var AbstractEntity[]|EntityCollection */
+    /** @var EntityCollection */
     private $collection;
 
     /** @var null|string */
