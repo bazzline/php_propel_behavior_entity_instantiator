@@ -8,10 +8,22 @@ use org\bovigo\vfs\vfsStream;
  */
 class AddToEntityInstantiatorBehaviorTest extends PHPUnit_Framework_TestCase
 {
+    /** @var string */
     private $className;
+
+    /** @var string */
+    private $extends;
+
+    /** @var string */
     private $indention;
+
+    /** @var string */
     private $namespace;
+
+    /** @var string */
     private $path;
+
+    /** @var string */
     private $prefix;
 
     public function setUp()
@@ -20,6 +32,7 @@ class AddToEntityInstantiatorBehaviorTest extends PHPUnit_Framework_TestCase
         $fileSystem = vfsStream::setup();
 
         $this->className    = 'ExampleInstantiator';
+        $this->extends      = '\stdClass';
         $this->indention    = '  ';
         $this->namespace    = 'Test\Net\Bazzline\Propel';
         $this->path         = $fileSystem->url();
@@ -35,6 +48,7 @@ class AddToEntityInstantiatorBehaviorTest extends PHPUnit_Framework_TestCase
 <database name="example_database" defaultIdMethod="native">
     <behavior name="add_to_entity_instantiator">
         <parameter name="entity_instantiator_class_name" value="$this->className" />
+        <parameter name="entity_instantiator_extends" value="$this->extends" />
         <parameter name="entity_instantiator_indention" value="$this->indention" />
         <parameter name="entity_instantiator_namespace" value="$this->namespace" />
         <parameter name="entity_instantiator_path_to_output" value="$this->path" />
@@ -79,6 +93,14 @@ EOF;
     {
         $fullQualifiedClassName = $this->namespace . '\\' . $this->className;
         $this->assertTrue(class_exists($fullQualifiedClassName));
+    }
+
+    public function testInstantiatorExtendsStdClass()
+    {
+        $fullQualifiedClassName = $this->namespace . '\\' . $this->className;
+        $instantiator           = new $fullQualifiedClassName();
+
+        $this->assertInstanceOf('stdClass', $instantiator);
     }
 
     public function testInstantiatorClassHasExpectedMethods()

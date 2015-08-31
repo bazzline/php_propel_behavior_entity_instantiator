@@ -6,7 +6,7 @@
     "minimum-stability": "dev",
     "require": {
         "php": ">=5.3.3",
-        "propel/propel1": "~1.6"
+        "propel/propel1": "~1.6",
         "phpunit/phpunit": "4.8.*",
         "mikey179/vfsStream": "1.5.*"
     },

@@ -20,6 +20,7 @@ class AddToEntityInstantiatorBehavior extends Behavior
 {
     const PARAMETER_ENTITY_ADD_IT_TO_ENTITY_INSTANTIATOR    = 'entity_add_to_entity_instantiator';
     const PARAMETER_ENTITY_INSTANTIATOR_CLASS_NAME          = 'entity_instantiator_class_name';
+    const PARAMETER_ENTITY_INSTANTIATOR_EXTENDS             = 'entity_instantiator_extends';
     const PARAMETER_ENTITY_INSTANTIATOR_INDENTION           = 'entity_instantiator_indention';
     const PARAMETER_ENTITY_INSTANTIATOR_NAMESPACE           = 'entity_instantiator_namespace';
     const PARAMETER_ENTITY_INSTANTIATOR_PATH_TO_OUTPUT      = 'entity_instantiator_path_to_output';
@@ -143,10 +144,11 @@ class AddToEntityInstantiatorBehavior extends Behavior
                 ? $pathToOutput
                 : getcwd() . (str_repeat(DIRECTORY_SEPARATOR . '..', 4)) . DIRECTORY_SEPARATOR . $pathToOutput;
             $className      = $this->parameters[self::PARAMETER_ENTITY_INSTANTIATOR_CLASS_NAME];
+            $extends        = $this->parameters[self::PARAMETER_ENTITY_INSTANTIATOR_EXTENDS];
             $indention      = $this->parameters[self::PARAMETER_ENTITY_INSTANTIATOR_INDENTION];
             $namespace      = $this->parameters[self::PARAMETER_ENTITY_INSTANTIATOR_NAMESPACE];
 
-            $generator->configure($absolutePathToOutput, $className, $indention, $namespace);
+            $generator->configure($absolutePathToOutput, $className, $extends, $indention, $namespace);
         }
 
         return $generator;

@@ -16,13 +16,16 @@ class EntityInstantiatorGenerator
     /** @var AbstractEntity[]|EntityCollection */
     private $collection;
 
+    /** @var null|string */
+    private $extends;
+
     /** @var bool */
     private $generationDone;
 
     /** @var string */
     private $indention;
 
-    /** @var string */
+    /** @var null|string */
     private $namespace;
 
     /** @var string */
@@ -66,13 +69,20 @@ class EntityInstantiatorGenerator
     /**
      * @param string $absolutePathToOutput
      * @param string $className
+     * @param null|string $extends
      * @param null|string $indention
      * @param string $namespace
      * @throws InvalidArgumentException
+     * @todo maybe put them together in a InstantiatorConfiguration?
      */
-    public function configure($absolutePathToOutput, $className, $indention = null, $namespace)
+    public function configure($absolutePathToOutput, $className, $extends = null, $indention = null, $namespace)
     {
         $this->setClassName($className);
+
+        if (!is_null($extends)) {
+            $this->setExtends($extends);
+        }
+
         $this->setIndention($indention);
 
         if (!is_null($namespace)) {
@@ -112,13 +122,14 @@ class EntityInstantiatorGenerator
         //begin of dependencies
         $className  = $this->className;
         $collection = $this->collection;
+        $extends    = $this->extends;
         $fileName   = $this->pathNameForOutputFile;
         $indention  = $this->indention;
         $namespace  = $this->namespace;
         //end of dependencies
 
         $this->throwRuntimeExceptionIfConfigurationIsNotDone();
-        $content = $this->generateContent($collection, $className, $indention, $namespace);
+        $content = $this->generateContent($collection, $className, $extends, $indention, $namespace);
         $this->tryToWriteContentOrThrowRuntimeException($fileName, $content);
         $this->generationDone = true;
     }
@@ -126,13 +137,18 @@ class EntityInstantiatorGenerator
     /**
      * @param EntityCollection $collection
      * @param string $className
+     * @param null|string $extends
      * @param string $indention
      * @param null|string $namespace
      * @return string
      */
-    private function generateContent(EntityCollection $collection, $className, $indention, $namespace)
+    private function generateContent(EntityCollection $collection, $className, $extends, $indention, $namespace)
     {
+        $hasExtends     = !(is_null($extends));
         $hasNamespace   = !(is_null($namespace));
+
+        $extends        = ($hasExtends) ? ' extends ' . $extends : '';
+
         $content        = '<?php';
         $content       .= ($hasNamespace)
             ? str_repeat(PHP_EOL, 2) . 'namespace ' . $this->namespace . ';' . PHP_EOL
@@ -147,7 +163,7 @@ $content .= '
  * @since ' . date('Y-m-d') . '
  * @see http://www.bazzline.net
  */
-class ' . $className . '
+class ' . $className . $extends . '
 {
 ' . $indention . '/**
 ' . $indention . ' * @return PDO
@@ -202,6 +218,15 @@ class ' . $className . '
     {
         $this->throwInvalidArgumentExceptionIfStringIsNotValid($className);
         $this->className = $className;
+    }
+
+    /**
+     * @param string $extends
+     */
+    private function setExtends($extends)
+    {
+        $this->throwInvalidArgumentExceptionIfStringIsNotValid($extends);
+        $this->extends = $extends;
     }
 
     /**

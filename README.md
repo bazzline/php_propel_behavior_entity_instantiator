@@ -34,6 +34,7 @@ If you want to control things in more detail, you should have a look to the [loc
 * the behavior has following parameters
     * `entity_add_to_entity_instantiator` - ("true"|"false") allowed to add or not ad this table to the instantiator, default is `true`
     * `entity_instantiator_class_name` - (string) that represents the class name, default is `DatabaseEntityInstantiator`
+    * `entity_instantiator_extends` - (string) that represents the full qualified class name, default is ``
     * `entity_instantiator_indention`- (string) that represents the indention in the instantiator, default is `    `
     * `entity_instantiator_namespace`- (string) that represents the namespace in the instantiator, default is `` (no namespace)
     * `entity_instantiator_path_to_output`- (string) that represents the path (relative to `vendor/../`) where the instantiator file will be written, default is `data`
@@ -47,6 +48,7 @@ Given a database with following settings
 <database name="exampleDatabase">
     <behavior name="add_to_entity_instantiator">
         <parameter name="entity_instantiator_class_name" value="MyEntityInstantiator" />
+        <parameter name="entity_instantiator_extends" value="MyAbstractEntityInstantiator" />
         <parameter name="entity_instantiator_indention" value="  " />
         <parameter name="entity_instantiator_namespace" value="Database\Service" />
         <parameter name="entity_instantiator_path_to_output" value="module/Database/src/Database/Service" />
@@ -69,7 +71,7 @@ Given a database with following settings
 </database>
 ```
 
-will create a file called `MyEntityInstantiator.php` in `module/Database/src/Database/Service` with following content.
+will create a file called `MyEntityInstantiator.php` in the path `module/Database/src/Database/Service` with following content.
 
 ```php
 <?php
@@ -83,7 +85,7 @@ namespace Database\Service
  * @since 2015-08-29
  * @see http://www.bazzline.net
  */
-class MyEntityInstantiator
+class MyEntityInstantiator extends MyAbstractEntityInstantiator
 {
     /** 
      * @return PDO
@@ -143,5 +145,7 @@ propel.behavior.create_entity_instantiator.class = lib.vendor.net_bazzline.php_p
 * upcoming
     * @todo
         * covered code with unit tests
+* [0.1.1](https://github.com/bazzline/php_propel_behavior_create_entity/tree/0.1.1) - released at 31.08.2015
+    * added optional parameter `extends`
 * [0.1.0](https://github.com/bazzline/php_propel_behavior_create_entity/tree/0.1.0) - released at 31.08.2015
     * initial release
