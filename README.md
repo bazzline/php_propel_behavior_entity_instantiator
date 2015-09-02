@@ -146,6 +146,8 @@ propel.behavior.create_entity_instantiator.class = lib.vendor.net_bazzline.php_p
     * @todo
         * covered code with unit tests
     * phpdoc optimization when dealing with the `EntityCollection`
+* [0.1.2](https://github.com/bazzline/php_propel_behavior_create_entity/tree/0.1.2) - released at 02.09.2015
+    * changed default method prefix from "databaseName" to "createDatabaseName"
 * [0.1.1](https://github.com/bazzline/php_propel_behavior_create_entity/tree/0.1.1) - released at 31.08.2015
     * added optional parameter `extends`
 * [0.1.0](https://github.com/bazzline/php_propel_behavior_create_entity/tree/0.1.0) - released at 31.08.2015

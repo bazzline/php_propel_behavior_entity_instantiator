@@ -123,7 +123,7 @@ class AddToEntityInstantiatorBehavior extends Behavior
     private function returnDatabaseNameIfMethodNamePrefixIsNotProvided(DataModelBuilder $builder)
     {
         $methodNamePrefix = (is_null($this->parameters[self::PARAMETER_ENTITY_METHOD_NAME_PREFIX]))
-            ? $builder->getDatabase()->getName()
+            ? 'create' . ucfirst($builder->getDatabase()->getName())
             : $this->parameters[self::PARAMETER_ENTITY_METHOD_NAME_PREFIX];
 
         return $methodNamePrefix;
