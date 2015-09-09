@@ -90,9 +90,9 @@ class MyEntityInstantiator extends MyAbstractEntityInstantiator
     /** 
      * @return PDO
      */
-    public function getConnection()
+    public function getConnection($name = null, $mode = \Propel::CONNECTION_WRITE)
     {   
-        return Propel::getConnection();
+        return Propel::getConnection($name, $mode);
     }   
 
     /** 
