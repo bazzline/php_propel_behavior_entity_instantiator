@@ -169,9 +169,9 @@ class ' . $className . $extends . '
 ' . $indention . '/**
 ' . $indention . ' * @return ' . (($hasNamespace) ? '\\' : '') . 'PDO
 ' . $indention . ' */
-' . $indention . 'public function getConnection()
+' . $indention . 'public function getConnection($name = null, $mode = ' . (($hasNamespace) ? '\\' : '') . 'Propel::CONNECTION_WRITE)
 ' . $indention . '{
-' . (str_repeat($indention, 2)) . 'return ' . (($hasNamespace) ? '\\' : '') . 'Propel::getConnection();
+' . (str_repeat($indention, 2)) . 'return ' . (($hasNamespace) ? '\\' : '') . 'Propel::getConnection($name, $mode);
 ' . $indention . '}
 ';
 
