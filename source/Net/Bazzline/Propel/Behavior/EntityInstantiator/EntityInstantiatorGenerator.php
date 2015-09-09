@@ -167,11 +167,11 @@ $content .= '
 class ' . $className . $extends . '
 {
 ' . $indention . '/**
-' . $indention . ' * @return PDO
+' . $indention . ' * @return ' . (($hasNamespace) ? '\\' : '') . 'PDO
 ' . $indention . ' */
 ' . $indention . 'public function getConnection()
 ' . $indention . '{
-' . (str_repeat($indention, 2)) . 'return Propel::getConnection();
+' . (str_repeat($indention, 2)) . 'return ' . (($hasNamespace) ? '\\' : '') . 'Propel::getConnection();
 ' . $indention . '}
 ';
 
