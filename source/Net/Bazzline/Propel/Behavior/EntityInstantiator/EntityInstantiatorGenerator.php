@@ -145,55 +145,27 @@ class EntityInstantiatorGenerator
      */
     private function generateContent(EntityCollection $collection, $className, $extends, $indention, $namespace)
     {
-        $hasExtends     = !(is_null($extends));
-        $hasNamespace   = !(is_null($namespace));
-
-        $extends        = ($hasExtends) ? ' extends ' . $extends : '';
-
-        $content        = '<?php';
-        $content       .= ($hasNamespace)
-            ? str_repeat(PHP_EOL, 2) . 'namespace ' . $this->namespace . ';' . PHP_EOL
-            : PHP_EOL;
-
-//@todo find a better way to have it indented and readable
-$content .= '
-/**
- * Class ' . $className . '
- *
- * @author ' . __NAMESPACE__ . __CLASS__ . '
- * @since ' . date('Y-m-d') . '
- * @see http://www.bazzline.net
- */
-class ' . $className . $extends . '
-{
-' . $indention . '/**
-' . $indention . ' * @return ' . (($hasNamespace) ? '\\' : '') . 'PDO
-' . $indention . ' */
-' . $indention . 'public function getConnection($name = null, $mode = ' . (($hasNamespace) ? '\\' : '') . 'Propel::CONNECTION_WRITE)
-' . $indention . '{
-' . (str_repeat($indention, 2)) . 'return ' . (($hasNamespace) ? '\\' : '') . 'Propel::getConnection($name, $mode);
-' . $indention . '}
-';
+        $content = $this->generateFileHeader($namespace);
+        $content .= $this->generateClassHeader($className, $extends);
+        $content .= $this->generateGetConnectionMethod($indention, $namespace);
 
         foreach ($collection as $entity) {
-            $methodName = lcfirst($entity->methodNamePrefix() . ucfirst($entity->methodName()));
-            $content   .= PHP_EOL .
-                $indention . '/**' . PHP_EOL .
-                $indention . ' * @return \\' . $entity->fullQualifiedClassName() . PHP_EOL .
-                $indention . ' */' . PHP_EOL .
-                $indention . 'public function ' . $methodName . '()' . PHP_EOL .
-                $indention . '{' . PHP_EOL;
-            if ($entity instanceof ObjectEntity) {
-                $content .= $indention . $indention . 'return new \\' . $entity->fullQualifiedClassName() . '();' . PHP_EOL;
-            } else if ($entity instanceof QueryEntity) {
-                $content .= $indention . $indention . 'return \\' . $entity->fullQualifiedClassName() . '::create();' . PHP_EOL;
-            }
-            $content .= $indention . '}' . PHP_EOL;
+            $content .= $this->generateEntityMethods($entity, $indention);
         }
 
         $content .= '}';
 
         return $content;
+    }
+
+    /**
+     * @param null|string $namespace
+     * @return bool
+     */
+    private function isValidString($namespace)
+    {
+        return ((is_string($namespace))
+            && (strlen($namespace) > 0));
     }
 
     /**
@@ -324,4 +296,84 @@ class ' . $className . $extends . '
             );
         }
     }
+
+    //begin of code generation methods
+    /**
+     * @param string $namespace
+     * @return string
+     */
+    private function generateFileHeader($namespace)
+    {
+        $content = '<?php';
+        $content .= ($this->isValidString($namespace)) ? str_repeat(PHP_EOL, 2) . 'namespace ' . $namespace . ';' . PHP_EOL : PHP_EOL;
+
+        return $content;
+    }
+
+    /**
+     * @param string $className
+     * @param string $extends
+     * @return string
+     * @todo find a better way to have it indented and readable
+     */
+    private function generateClassHeader($className, $extends)
+    {
+        $extends = ($this->isValidString($extends)) ? ' extends ' . $extends : '';
+
+    return '
+/**
+ * Class ' . $className . '
+ *
+ * @author ' . __NAMESPACE__ . __CLASS__ . '
+ * @since ' . date('Y-m-d') . '
+ * @see http://www.bazzline.net
+ */
+class ' . $className . $extends . '
+{' . PHP_EOL;
+    }
+
+    /**
+     * @param string $indention
+     * @param string $namespace
+     * @return string
+     * @todo find a better way to have it indented and readable
+     */
+    private function generateGetConnectionMethod($indention, $namespace)
+    {
+        $namespaceIsUsed = $this->isValidString($namespace);
+
+return $indention . '/**
+' . $indention . ' * @return ' . (($namespaceIsUsed) ? '\\' : '') . 'PDO
+' . $indention . ' */
+' . $indention . 'public function getConnection($name = null, $mode = ' . (($namespaceIsUsed) ? '\\' : '') . 'Propel::CONNECTION_WRITE)
+' . $indention . '{
+' . (str_repeat($indention, 2)) . 'return ' . (($namespaceIsUsed) ? '\\' : '') . 'Propel::getConnection($name, $mode);
+' . $indention . '}' . PHP_EOL;
+
+    }
+
+    /**
+     * @param AbstractEntity $entity
+     * @param string $indention
+     * @return string
+     */
+    private function generateEntityMethods(AbstractEntity $entity, $indention)
+    {
+        $methodName = lcfirst($entity->methodNamePrefix() . ucfirst($entity->methodName()));
+        $content   = PHP_EOL .
+            $indention . '/**' . PHP_EOL .
+            $indention . ' * @return \\' . $entity->fullQualifiedClassName() . PHP_EOL .
+            $indention . ' */' . PHP_EOL .
+            $indention . 'public function ' . $methodName . '()' . PHP_EOL .
+            $indention . '{' . PHP_EOL;
+        if ($entity instanceof ObjectEntity) {
+            $content .= $indention . $indention . 'return new \\' . $entity->fullQualifiedClassName() . '();' . PHP_EOL;
+        } else if ($entity instanceof QueryEntity) {
+            $content .= $indention . $indention . 'return \\' . $entity->fullQualifiedClassName() . '::create();' . PHP_EOL;
+        }
+        $content .= $indention . '}' . PHP_EOL;
+
+        return $content;
+    }
+    //end of code generation methods
 }

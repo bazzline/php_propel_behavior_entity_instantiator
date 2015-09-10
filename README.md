@@ -146,6 +146,8 @@ propel.behavior.create_entity_instantiator.class = lib.vendor.net_bazzline.php_p
     * @todo
         * covered code with unit tests
     * phpdoc optimization when dealing with the `EntityCollection`
+* [0.2.2](https://github.com/bazzline/php_propel_behavior_create_entity/tree/0.2.2) - released at 10.09.2015
+    * refactored `EntityInstantiatorGenerator` internal code generation
 * [0.2.1](https://github.com/bazzline/php_propel_behavior_create_entity/tree/0.2.1) - released at 09.09.2015
     * added "$name" and "$mode" as optional parameter for "getConnection()"
 * [0.2.0](https://github.com/bazzline/php_propel_behavior_create_entity/tree/0.2.0) - released at 09.09.2015
