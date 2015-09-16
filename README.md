@@ -59,14 +59,20 @@ Given a database with following settings
         <column name="id" type="INTEGER" primaryKey="true" autoincrement="true" />
         <column name="name" type="VARCHAR" size="255" />
         
-        <parameter name="entity_add_to_entity_instantiator" value="true" />
+        <!-- turn it on - default -->
+        <behavior name="add_to_entity_instantiator">
+            <parameter name="entity_add_to_entity_instantiator" value="true" />
+        </behavior>
     </table>
     
     <table name="product">
         <column name="id" type="INTEGER" primaryKey="true" autoincrement="true" />
         <column name="name" type="VARCHAR" size="255" />
         
-        <parameter name="entity_add_to_entity_instantiator" value="false" />
+        <!-- turn it on -->
+        <behavior name="add_to_entity_instantiator">
+            <parameter name="entity_add_to_entity_instantiator" value="false" />
+        </behavior>
     </table>
 </database>
 ```
@@ -145,6 +151,7 @@ propel.behavior.create_entity_instantiator.class = lib.vendor.net_bazzline.php_p
 * upcoming
     * @todo
         * covered code with unit tests
+    * fixed documentation issue
     * phpdoc optimization when dealing with the `EntityCollection`
 * [0.2.2](https://github.com/bazzline/php_propel_behavior_create_entity/tree/0.2.2) - released at 10.09.2015
     * refactored `EntityInstantiatorGenerator` internal code generation
