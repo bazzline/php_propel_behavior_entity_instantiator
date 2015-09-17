@@ -343,6 +343,8 @@ class ' . $className . $extends . '
         $namespaceIsUsed = $this->isValidString($namespace);
 
 return $indention . '/**
+' . $indention . ' * @param null|string $name - The data source name that is used to look up the DSN from the runtime configuration file.
+' . $indention . ' * @param string $mode The connection mode (this applies to replication systems).
 ' . $indention . ' * @return ' . (($namespaceIsUsed) ? '\\' : '') . 'PDO
 ' . $indention . ' */
 ' . $indention . 'public function getConnection($name = null, $mode = ' . (($namespaceIsUsed) ? '\\' : '') . 'Propel::CONNECTION_WRITE)
