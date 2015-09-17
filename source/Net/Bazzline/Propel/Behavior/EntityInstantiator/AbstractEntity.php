@@ -9,29 +9,37 @@ namespace Net\Bazzline\Propel\Behavior\EntityInstantiator;
 abstract class AbstractEntity
 {
     /** @var string */
+    private $className;
+
+    /** @var string */
     private $databaseName;
 
     /** @var string */
     private $fullQualifiedClassName;
 
     /** @var string */
-    private $methodName;
-
-    /** @var string */
     private $methodNamePrefix;
 
     /**
+     * @param string $className
      * @param string $databaseName
      * @param string $fullQualifiedClassName
-     * @param string $methodName
      * @param string $methodNamePrefix
      */
-    public function __construct($databaseName, $fullQualifiedClassName, $methodName, $methodNamePrefix)
+    public function __construct($className, $databaseName, $fullQualifiedClassName, $methodNamePrefix)
     {
+        $this->className                = $className;
         $this->databaseName             = $databaseName;
         $this->fullQualifiedClassName   = $fullQualifiedClassName;
-        $this->methodName               = $methodName;
         $this->methodNamePrefix         = $methodNamePrefix;
+    }
+
+    /**
+     * @return string
+     */
+    public function className()
+    {
+        return $this->className;
     }
 
     /**
@@ -48,14 +56,6 @@ abstract class AbstractEntity
     public function fullQualifiedClassName()
     {
         return $this->fullQualifiedClassName;
-    }
-
-    /**
-     * @return string
-     */
-    public function methodName()
-    {
-        return $this->methodName;
     }
 
     /**

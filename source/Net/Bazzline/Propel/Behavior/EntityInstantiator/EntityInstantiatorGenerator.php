@@ -145,7 +145,9 @@ class EntityInstantiatorGenerator
      */
     private function generateContent(EntityCollection $collection, $className, $extends, $indention, $namespace)
     {
-        $content = $this->generateFileHeader($namespace);
+        $useStatements = $this->generateUseStatements($collection);
+
+        $content = $this->generateFileHeader($namespace, $useStatements);
         $content .= $this->generateClassHeader($className, $extends);
         $content .= $this->generateGetConnectionMethod($indention, $namespace);
 
@@ -297,15 +299,39 @@ class EntityInstantiatorGenerator
         }
     }
 
+    /**
+     * @param EntityCollection $collection
+     * @return array
+     */
+    private function generateUseStatements(EntityCollection $collection)
+    {
+        $uses = array();
+
+        foreach ($collection as $entity) {
+            $uses[] = 'use ' . $entity->fullQualifiedClassName() . ';';
+        }
+
+        return $uses;
+    }
+
     //begin of code generation methods
     /**
      * @param string $namespace
+     * @param array $uses
      * @return string
      */
-    private function generateFileHeader($namespace)
+    private function generateFileHeader($namespace, $uses)
     {
         $content = '<?php';
         $content .= ($this->isValidString($namespace)) ? str_repeat(PHP_EOL, 2) . 'namespace ' . $namespace . ';' . PHP_EOL : PHP_EOL;
+
+        $thereAreUseStatements = (!empty($uses));
+
+        if ($thereAreUseStatements) {
+            $content .= PHP_EOL;
+            $content .= implode(PHP_EOL, $uses);
+            $content .= PHP_EOL;
+        }
 
         return $content;
     }
@@ -361,17 +387,17 @@ return $indention . '/**
      */
     private function generateEntityMethods(AbstractEntity $entity, $indention)
     {
-        $methodName = lcfirst($entity->methodNamePrefix() . ucfirst($entity->methodName()));
+        $methodName = lcfirst($entity->methodNamePrefix() . ucfirst($entity->className()));
         $content   = PHP_EOL .
             $indention . '/**' . PHP_EOL .
-            $indention . ' * @return \\' . $entity->fullQualifiedClassName() . PHP_EOL .
+            $indention . ' * @return ' . $entity->className() . PHP_EOL .
             $indention . ' */' . PHP_EOL .
             $indention . 'public function ' . $methodName . '()' . PHP_EOL .
             $indention . '{' . PHP_EOL;
         if ($entity instanceof ObjectEntity) {
-            $content .= $indention . $indention . 'return new \\' . $entity->fullQualifiedClassName() . '();' . PHP_EOL;
+            $content .= $indention . $indention . 'return new ' . $entity->className() . '();' . PHP_EOL;
         } else if ($entity instanceof QueryEntity) {
-            $content .= $indention . $indention . 'return \\' . $entity->fullQualifiedClassName() . '::create();' . PHP_EOL;
+            $content .= $indention . $indention . 'return ' . $entity->className() . '::create();' . PHP_EOL;
         }
         $content .= $indention . '}' . PHP_EOL;
 

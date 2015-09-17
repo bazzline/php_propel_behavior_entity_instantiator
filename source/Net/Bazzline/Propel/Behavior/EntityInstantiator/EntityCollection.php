@@ -40,11 +40,11 @@ class EntityCollection implements ArrayAccess, Countable, Iterator
      */
     private function throwInvalidArgumentExceptionIfEntityWasAlreadyAdded(AbstractEntity $entity)
     {
-        $hash = sha1($entity->databaseName() . '_' . $entity->methodName());
+        $hash = sha1($entity->databaseName() . '_' . $entity->className());
 
         if (isset($this->hashCollection[$hash])) {
             throw new InvalidArgumentException(
-                'you are trying to add "' . $entity->methodName() .
+                'you are trying to add "' . $entity->className() .
                 '" twice for the database "' . $entity->databaseName() . '"'
             );
         }

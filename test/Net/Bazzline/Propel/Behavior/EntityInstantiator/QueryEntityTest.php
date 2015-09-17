@@ -13,16 +13,16 @@ class QueryEntityTest extends PHPUnit_Framework_TestCase
 {
     public function testConstructor()
     {
+        $className              = 'bar';
         $databaseName           = 'foobar';
         $fullQualifiedClassName = '\Foo\Bar\Foobar';
-        $methodName             = 'bar';
         $methodNamePrefix       = 'foo';
 
-        $entity = new QueryEntity($databaseName, $fullQualifiedClassName, $methodName, $methodNamePrefix);
+        $entity = new QueryEntity($className, $databaseName, $fullQualifiedClassName, $methodNamePrefix);
 
+        $this->assertEquals($className, $entity->className());
         $this->assertEquals($databaseName, $entity->databaseName());
         $this->assertEquals($fullQualifiedClassName, $entity->fullQualifiedClassName());
         $this->assertEquals($methodNamePrefix, $entity->methodNamePrefix());
-        $this->assertEquals($methodName, $entity->methodName());
     }
 }

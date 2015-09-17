@@ -1,4 +1,5 @@
 <?php
+
 use Net\Bazzline\Propel\Behavior\EntityInstantiator\EntityCollection;
 use Net\Bazzline\Propel\Behavior\EntityInstantiator\EntityInstantiatorGenerator;
 use Net\Bazzline\Propel\Behavior\EntityInstantiator\ObjectEntity;
@@ -93,9 +94,9 @@ class AddToEntityInstantiatorBehavior extends Behavior
         $methodNamePrefix = $this->returnDatabaseNameIfMethodNamePrefixIsNotProvided($builder);
 
         return new ObjectEntity(
+            $builder->getStubObjectBuilder()->getClassname(),
             $builder->getDatabase()->getName(),
             $builder->getStubObjectBuilder()->getFullyQualifiedClassname(),
-            $builder->getStubObjectBuilder()->getClassname(),
             $methodNamePrefix
         );
     }
@@ -109,9 +110,9 @@ class AddToEntityInstantiatorBehavior extends Behavior
         $methodNamePrefix = $this->returnDatabaseNameIfMethodNamePrefixIsNotProvided($builder);
 
         return new QueryEntity(
+            $builder->getStubQueryBuilder()->getClassname(),
             $builder->getDatabase()->getName(),
             $builder->getStubQueryBuilder()->getFullyQualifiedClassname(),
-            $builder->getStubQueryBuilder()->getClassname(),
             $methodNamePrefix
         );
     }

@@ -29,7 +29,7 @@ class EntityCollectionTest extends PHPUnit_Framework_TestCase
     /**
      * @depends testAdd
      * @expectedException InvalidArgumentException
-     * @expectedExceptionMessage  you are trying to add "methodName" twice for the database "database_name"
+     * @expectedExceptionMessage  you are trying to add "className" twice for the database "database_name"
      */
     public function testAddSameEntityTwice()
     {
@@ -109,14 +109,14 @@ class EntityCollectionTest extends PHPUnit_Framework_TestCase
      * @param string $methodName
      * @return Mockery\MockInterface|AbstractEntity
      */
-    private function getNewEntity($methodName = 'methodName')
+    private function getNewEntity($methodName = 'className')
     {
         $entity = Mockery::mock('Net\Bazzline\Propel\Behavior\EntityInstantiator\AbstractEntity');
 
         $entity->shouldReceive('databaseName')
             ->andReturn('database_name')
             ->byDefault();
-        $entity->shouldReceive('methodName')
+        $entity->shouldReceive('className')
             ->andReturn($methodName)
             ->byDefault();
 
