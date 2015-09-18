@@ -153,6 +153,8 @@ propel.behavior.create_entity_instantiator.class = lib.vendor.net_bazzline.php_p
         * covered code with unit tests
         * refactor *EntityInstantiatorGenerator* (extract the *generateContent* method to delegate responsibilities)
     * use "use" instead and full qualified names usage in the methods
+    * coverd "Propel" and "PDO" also with use statements
+    * use statements are ordered alphabetically
 * [0.2.3](https://github.com/bazzline/php_propel_behavior_create_entity/tree/0.2.3) - released at 17.09.2015
     * fixed documentation issue
     * fixed phpdoc issue for generated method *getConnection*

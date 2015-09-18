@@ -145,7 +145,7 @@ class EntityInstantiatorGenerator
      */
     private function generateContent(EntityCollection $collection, $className, $extends, $indention, $namespace)
     {
-        $useStatements = $this->generateUseStatements($collection);
+        $useStatements = $this->generateUseStatements($namespace, $collection);
 
         $content = $this->generateFileHeader($namespace, $useStatements);
         $content .= $this->generateClassHeader($className, $extends);
@@ -300,16 +300,24 @@ class EntityInstantiatorGenerator
     }
 
     /**
+     * @param string $namespace
      * @param EntityCollection $collection
      * @return array
      */
-    private function generateUseStatements(EntityCollection $collection)
+    private function generateUseStatements($namespace, EntityCollection $collection)
     {
         $uses = array();
+
+        if ($this->isValidString($namespace)) {
+            $uses[] = 'use Propel;';
+            $uses[] = 'use PDO;';
+        }
 
         foreach ($collection as $entity) {
             $uses[] = 'use ' . $entity->fullQualifiedClassName() . ';';
         }
+
+        natsort($uses);
 
         return $uses;
     }
@@ -371,11 +379,11 @@ class ' . $className . $extends . '
 return $indention . '/**
 ' . $indention . ' * @param null|string $name - The data source name that is used to look up the DSN from the runtime configuration file.
 ' . $indention . ' * @param string $mode The connection mode (this applies to replication systems).
-' . $indention . ' * @return ' . (($namespaceIsUsed) ? '\\' : '') . 'PDO
+' . $indention . ' * @return PDO
 ' . $indention . ' */
-' . $indention . 'public function getConnection($name = null, $mode = ' . (($namespaceIsUsed) ? '\\' : '') . 'Propel::CONNECTION_WRITE)
+' . $indention . 'public function getConnection($name = null, $mode = Propel::CONNECTION_WRITE)
 ' . $indention . '{
-' . (str_repeat($indention, 2)) . 'return ' . (($namespaceIsUsed) ? '\\' : '') . 'Propel::getConnection($name, $mode);
+' . (str_repeat($indention, 2)) . 'return Propel::getConnection($name, $mode);
 ' . $indention . '}' . PHP_EOL;
 
     }
