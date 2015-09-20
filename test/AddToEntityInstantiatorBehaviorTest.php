@@ -1,5 +1,5 @@
 <?php
-use Net\Bazzline\Propel\Behavior\EntityInstantiator\EntityInstantiatorGenerator;
+use Net\Bazzline\Propel\Behavior\EntityInstantiator\Manager;
 use org\bovigo\vfs\vfsStream;
 
 /**
@@ -78,7 +78,7 @@ EOF;
 
             $builder->build();
             //we have to call generate manually since it is called only when php execution is finished
-            EntityInstantiatorGenerator::getInstance()->generate();
+            Manager::getInstance()->generate();
         }
     }
 

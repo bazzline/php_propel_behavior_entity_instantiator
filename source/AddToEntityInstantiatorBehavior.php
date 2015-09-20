@@ -1,7 +1,6 @@
 <?php
 
-use Net\Bazzline\Propel\Behavior\EntityInstantiator\EntityCollection;
-use Net\Bazzline\Propel\Behavior\EntityInstantiator\EntityInstantiatorGenerator;
+use Net\Bazzline\Propel\Behavior\EntityInstantiator\Manager;
 use Net\Bazzline\Propel\Behavior\EntityInstantiator\ObjectEntity;
 use Net\Bazzline\Propel\Behavior\EntityInstantiator\QueryEntity;
 
@@ -9,8 +8,10 @@ use Net\Bazzline\Propel\Behavior\EntityInstantiator\QueryEntity;
 $pathToClasses = __DIR__ . '/Net/Bazzline/Propel/Behavior/EntityInstantiator/';
 
 require_once($pathToClasses . 'AbstractEntity.php');
+require_once($pathToClasses . 'Configuration.php');
 require_once($pathToClasses . 'EntityCollection.php');
-require_once($pathToClasses . 'EntityInstantiatorGenerator.php');
+require_once($pathToClasses . 'FileContentGenerator.php');
+require_once($pathToClasses . 'Manager.php');
 require_once($pathToClasses . 'ObjectEntity.php');
 require_once($pathToClasses . 'QueryEntity.php');
 
@@ -67,9 +68,9 @@ class AddToEntityInstantiatorBehavior extends Behavior
     public function addObjectToGenerator(DataModelBuilder $builder)
     {
         if ($this->addIt()) {
-            $generator  = $this->getGenerator();
+            $manager    = $this->getManager();
             $entity     = $this->buildEntityFromObject($builder);
-            $generator->add($entity);
+            $manager->add($entity);
         }
     }
 
@@ -79,9 +80,9 @@ class AddToEntityInstantiatorBehavior extends Behavior
     public function addQueryToGenerator(DataModelBuilder $builder)
     {
         if ($this->addIt()) {
-            $generator  = $this->getGenerator();
+            $manager    = $this->getManager();
             $entity     = $this->buildEntityFromQuery($builder);
-            $generator->add($entity);
+            $manager->add($entity);
         }
     }
 
@@ -131,13 +132,13 @@ class AddToEntityInstantiatorBehavior extends Behavior
     }
 
     /**
-     * @return EntityInstantiatorGenerator
+     * @return Manager
      */
-    private function getGenerator()
+    private function getManager()
     {
-        $generator = EntityInstantiatorGenerator::getInstance();
+        $manager = Manager::getInstance();
 
-        if ($generator->isNotConfigured()) {
+        if ($manager->isNotConfigured()) {
             $pathToOutput   = $this->parameters[self::PARAMETER_ENTITY_INSTANTIATOR_PATH_TO_OUTPUT];
             $isAbsolutePath = (strncmp($pathToOutput, DIRECTORY_SEPARATOR, strlen(DIRECTORY_SEPARATOR)) === 0);    //like /foo/bar
             $isResource     = (strpos($pathToOutput, '://') !== false);  //like vfs://
@@ -147,15 +148,14 @@ class AddToEntityInstantiatorBehavior extends Behavior
                 ? $pathToOutput
                 : getcwd() . (str_repeat(DIRECTORY_SEPARATOR . '..', 4)) . DIRECTORY_SEPARATOR . $pathToOutput;
             $className      = $this->parameters[self::PARAMETER_ENTITY_INSTANTIATOR_CLASS_NAME];
-            $collection     = new EntityCollection();
             $extends        = $this->parameters[self::PARAMETER_ENTITY_INSTANTIATOR_EXTENDS];
             $indention      = $this->parameters[self::PARAMETER_ENTITY_INSTANTIATOR_INDENTION];
             $namespace      = $this->parameters[self::PARAMETER_ENTITY_INSTANTIATOR_NAMESPACE];
 
-            $generator->configure($absolutePathToOutput, $className, $collection, $extends, $indention, $namespace);
+            $manager->configure($className, $indention, $absolutePathToOutput, $namespace, $extends);
         }
 
-        return $generator;
+        return $manager;
     }
 
     /**

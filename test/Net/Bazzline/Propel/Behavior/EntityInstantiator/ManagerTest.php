@@ -8,19 +8,16 @@ namespace Test\Net\Bazzline\Propel\Behavior\EntityInstantiator;
 use Exception;
 use Mockery;
 use Net\Bazzline\Propel\Behavior\EntityInstantiator\EntityCollection;
-use Net\Bazzline\Propel\Behavior\EntityInstantiator\EntityInstantiatorGenerator;
+use Net\Bazzline\Propel\Behavior\EntityInstantiator\Manager;
 use PHPUnit_Framework_TestCase;
 use org\bovigo\vfs\vfsStream;
 use ReflectionClass;
 use RuntimeException;
 
-class EntityInstantiatorGeneratorTest extends PHPUnit_Framework_TestCase
+class ManagerTest extends PHPUnit_Framework_TestCase
 {
     /** @var string */
     private $className;
-
-    /** @var Mockery\MockInterface|EntityCollection */
-    private $collection;
 
     /** @var string */
     private $extends;
@@ -39,11 +36,8 @@ class EntityInstantiatorGeneratorTest extends PHPUnit_Framework_TestCase
         $this->resetGenerator();
 
         $this->className    = 'ClassName';
-        $this->collection   = Mockery::mock('Net\Bazzline\Propel\Behavior\EntityInstantiator\EntityCollection');
-        $this->collection->shouldReceive('rewind');
-        $this->collection->shouldReceive('valid')->andReturn(false);
-        $this->fileSystem   = vfsStream::setup();
         $this->extends      = 'stdClass';
+        $this->fileSystem   = vfsStream::setup();
         $this->indention    = '  ';
         $this->namespace    = 'Name\Space';
     }
@@ -59,40 +53,23 @@ class EntityInstantiatorGeneratorTest extends PHPUnit_Framework_TestCase
      */
     public function testCallingGenerateBeforeCallingConfigure()
     {
-        $generator = $this->getGenerator();
-        $generator->generate();
+        $manager = $this->getManager();
+        $manager->generate();
     }
 
-    public function testIsNotConfigured()
+    public function testGenerateByUsingNamespace()
     {
-        $generator = $this->getGenerator();
-        $this->assertTrue($generator->isNotConfigured());
+        $manager = $this->getManager();
 
-        $generator->configure(
-            $this->fileSystem->url(),
+        $manager->configure(
             $this->className,
-            $this->collection,
-            $this->extends,
             $this->indention,
-            $this->namespace
-        );
-        $this->assertFalse($generator->isNotConfigured());
-    }
-
-    public function testGenerate()
-    {
-        $generator = $this->getGenerator();
-
-        $generator->configure(
             $this->fileSystem->url(),
-            $this->className,
-            $this->collection,
-            $this->extends,
-            $this->indention,
-            $this->namespace
+            $this->namespace,
+            $this->extends
         );
 
-        $generator->generate();
+        $manager->generate();
         $filePath       = $this->fileSystem->url() . '/' . $this->className . '.php';
         $fileContent    = file_get_contents($filePath);
 
@@ -102,22 +79,51 @@ class EntityInstantiatorGeneratorTest extends PHPUnit_Framework_TestCase
         $this->assertContains('extends ' . $this->extends, $fileContent);
         $this->assertContains($this->indention . 'public function ', $fileContent);
         $this->assertContains('namespace ' . $this->namespace, $fileContent);
+        $this->assertContains('use Propel;' , $fileContent);
+        $this->assertContains('use PDO;' , $fileContent);
+        $this->assertContains(' Propel::CONNECTION_WRITE' , $fileContent);
     }
 
-    /**
-     * @return EntityInstantiatorGenerator
-     */
-    private function getGenerator()
+    public function testGenerateWithoutUsingNamespace()
     {
-        return EntityInstantiatorGenerator::getInstance();
+        $manager = $this->getManager();
+
+        $manager->configure(
+            $this->className,
+            $this->indention,
+            $this->fileSystem->url(),
+            null,
+            $this->extends
+        );
+
+        $manager->generate();
+        $filePath       = $this->fileSystem->url() . '/' . $this->className . '.php';
+        $fileContent    = file_get_contents($filePath);
+
+        $this->assertTrue(file_exists($filePath));
+
+        $this->assertContains('class ' . $this->className, $fileContent);
+        $this->assertContains('extends ' . $this->extends, $fileContent);
+        $this->assertContains($this->indention . 'public function ', $fileContent);
+        $this->assertNotContains('namespace', $fileContent);
+        $this->assertNotContains('use Propel;' , $fileContent);
+        $this->assertNotContains('use PDO;' , $fileContent);
     }
 
     /**
-     * @return EntityInstantiatorGenerator
+     * @return Manager
+     */
+    private function getManager()
+    {
+        return Manager::getInstance();
+    }
+
+    /**
+     * @return Manager
      */
     private function resetGenerator()
     {
-        $singleton  = EntityInstantiatorGenerator::getInstance();
+        $singleton  = Manager::getInstance();
         $reflection = new ReflectionClass($singleton);
         $instance   = $reflection->getProperty('instance');
 
