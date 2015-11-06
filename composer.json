@@ -5,10 +5,10 @@
     "type": "library",
     "minimum-stability": "dev",
     "require": {
-        "mikey179/vfsStream": "1.5.*",
+        "mikey179/vfsStream": "1.6.*",
         "mockery/mockery": "0.9.4",
         "php": ">=5.3.3",
-        "phpunit/phpunit": "4.8.*",
+        "phpunit/phpunit": ">=4.8.8",
         "propel/propel1": "~1.6"
     },
     "license": "LGPLv3",
