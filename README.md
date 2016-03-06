@@ -151,6 +151,8 @@ propel.behavior.create_entity_instantiator.class = lib.vendor.net_bazzline.php_p
 * upcoming
     * @todo
         * covered code with unit tests
+* [1.0.0](https://github.com/bazzline/php_propel_behavior_create_entity/tree/1.0.0) - released at 06.03.2016
+    * updated depenency
 * [0.4.3](https://github.com/bazzline/php_propel_behavior_create_entity/tree/0.4.2) - released at 11.01.2016
     * fixed dependency handling for phpunit 4.8.*
 * [0.4.2](https://github.com/bazzline/php_propel_behavior_create_entity/tree/0.4.2) - released at 11.12.2015
@@ -179,3 +181,7 @@ propel.behavior.create_entity_instantiator.class = lib.vendor.net_bazzline.php_p
     * added optional parameter `extends`
 * [0.1.0](https://github.com/bazzline/php_propel_behavior_create_entity/tree/0.1.0) - released at 31.08.2015
     * initial release
+
+# Final Words
+
+Star it if you like it :-). Add issues if you need it. Pull patches if you enjoy it. Write a blog entry if you use it. [Donate something](https://gratipay.com/~stevleibelt) if you love it :-].

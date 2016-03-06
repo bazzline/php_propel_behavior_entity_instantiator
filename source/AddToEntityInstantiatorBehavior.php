@@ -5,7 +5,7 @@ use Net\Bazzline\Propel\Behavior\EntityInstantiator\ObjectEntity;
 use Net\Bazzline\Propel\Behavior\EntityInstantiator\QueryEntity;
 
 //@todo do we need this if dependencies are managed via composer and composer autoloader?
-$pathToClasses = __DIR__ . '/Net/Bazzline/Propel/Behavior/EntityInstantiator/';
+$pathToClasses = __DIR__ . '/';
 
 require_once($pathToClasses . 'AbstractEntity.php');
 require_once($pathToClasses . 'Configuration.php');
