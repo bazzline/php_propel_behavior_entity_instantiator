@@ -152,6 +152,8 @@ propel.behavior.create_entity_instantiator.class = lib.vendor.net_bazzline.php_p
     * @todo
         * covered code with unit tests
 * [1.0.0](https://github.com/bazzline/php_propel_behavior_create_entity/tree/1.0.0) - released at 06.03.2016
+    * added support for php 7.0
+    * removed support for php 5.3.3
     * updated depenency
 * [0.4.3](https://github.com/bazzline/php_propel_behavior_create_entity/tree/0.4.2) - released at 11.01.2016
     * fixed dependency handling for phpunit 4.8.*

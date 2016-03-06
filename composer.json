@@ -40,7 +40,7 @@
         ]
     },
     "autoload-dev": {
-        {
+        "psr-4": {
             "Test\\Net\\Bazzline\\Propel\\Behavior\\EntityInstantiator\\": "test/"
         },
         "classmap": [
