@@ -150,6 +150,9 @@ propel.behavior.create_entity_instantiator.class = lib.vendor.net_bazzline.php_p
 
 * upcoming
     * @todo
+        * add a flag to enable or disable "createFoo" generation
+        * add a flag to enable or disable "createFooQuery" generation
+        * add a flag to not use "use statemens" but fully qualified names to avoid namespace glitches (same classname in different namespaces)
         * covered code with unit tests
 * [1.0.2](https://github.com/bazzline/php_propel_behavior_create_entity/tree/1.0.2) - released at 23.01.2017
     * updated depenency
