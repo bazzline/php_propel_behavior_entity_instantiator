@@ -47,7 +47,7 @@ class FileContentGenerator
 /**
  * Class ' . $className . '
  *
- * @author ' . __NAMESPACE__ . __CLASS__ . '
+ * @author ' . __CLASS__ . '
  * @since ' . date('Y-m-d') . '
  * @see http://www.bazzline.net
  */

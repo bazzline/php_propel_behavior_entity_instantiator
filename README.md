@@ -53,7 +53,6 @@ Given a database with following settings
         <parameter name="entity_instantiator_namespace" value="Database\Service" />
         <parameter name="entity_instantiator_path_to_output" value="module/Database/src/Database/Service" />
         <parameter name="entity_method_name_prefix" value="create" />
-        <parameter name="use_configured_database_name_as_default_when_calling_get_connection" value="yes" />
     </behavior>
     
     <table name="user">
@@ -155,6 +154,8 @@ propel.behavior.create_entity_instantiator.class = lib.vendor.net_bazzline.php_p
         * add a flag to enable or disable "createFooQuery" generation
         * add a flag to not use "use statemens" but fully qualified names to avoid namespace glitches (same classname in different namespaces)
         * covered code with unit tests
+    * fixed [issue 2](https://github.com/bazzline/php_propel_behavior_entity_instantiator/issues/2)
+    * fixed [issue 3](https://github.com/bazzline/php_propel_behavior_entity_instantiator/issues/3)
 * [1.0.2](https://github.com/bazzline/php_propel_behavior_create_entity/tree/1.0.2) - released at 23.01.2017
     * updated depenency
 * [1.0.1](https://github.com/bazzline/php_propel_behavior_create_entity/tree/1.0.1) - released at 30.05.2016
