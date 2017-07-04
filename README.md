@@ -53,6 +53,7 @@ Given a database with following settings
         <parameter name="entity_instantiator_namespace" value="Database\Service" />
         <parameter name="entity_instantiator_path_to_output" value="module/Database/src/Database/Service" />
         <parameter name="entity_method_name_prefix" value="create" />
+        <parameter name="use_configured_database_name_as_default_when_calling_get_connection" value="yes" />
     </behavior>
     
     <table name="user">

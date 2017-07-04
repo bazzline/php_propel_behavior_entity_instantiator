@@ -17,7 +17,11 @@ class ConfigurationTest extends PHPUnit_Framework_TestCase
         $this->assertFalse($configuration->isConfigured());
         $this->assertTrue($configuration->isNotConfigured());
 
-        $configuration->configure(__CLASS__, '    ', __DIR__);
+        $configuration->configure(
+            __CLASS__,
+            '    ',
+            __DIR__
+        );
 
         $this->assertTrue($configuration->isConfigured());
         $this->assertFalse($configuration->isNotConfigured());

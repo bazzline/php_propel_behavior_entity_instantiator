@@ -54,6 +54,8 @@ class AddToEntityInstantiatorBehaviorTest extends PHPUnit_Framework_TestCase
         <parameter name="entity_instantiator_path_to_output" value="$this->path" />
         <parameter name="entity_method_name_prefix" value="$this->prefix" />
         <parameter name="entity_add_to_entity_instantiator" value="true" />
+        <parameter name="entity_default_connection_mode" value="Propel::CONNECTION_READ" />
+        <parameter name="entity_default_connection_name" value="my_default_connection_name" />
     </behavior>
 
     <table name="table_one">
@@ -86,6 +88,7 @@ EOF;
     {
         $path = $this->path . DIRECTORY_SEPARATOR . $this->className . '.php';
         $this->assertTrue(file_exists($path));
+echo(file_get_contents($path));
         require_once ($path);
     }
 

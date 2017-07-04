@@ -62,11 +62,28 @@ class Manager
      * @param string $pathToOutput
      * @param null|string $namespace
      * @param null|string $extends
+     * @param null|string $defaultConnectionMode
+     * @param null|string $defaultConnectionName
      * @throws InvalidArgumentException
      */
-    public function configure($className, $indention, $pathToOutput, $namespace = null, $extends = null)
-    {
-        $this->configuration->configure($className, $indention, $pathToOutput, $namespace, $extends);
+    public function configure(
+        $className,
+        $indention,
+        $pathToOutput,
+        $namespace = null,
+        $extends = null,
+        $defaultConnectionMode = null,
+        $defaultConnectionName = null
+    ) {
+        $this->configuration->configure(
+            $className,
+            $indention,
+            $pathToOutput,
+            $namespace,
+            $extends,
+            $defaultConnectionMode,
+            $defaultConnectionName
+        );
     }
 
     /**

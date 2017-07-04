@@ -61,6 +61,7 @@ class ManagerTest extends PHPUnit_Framework_TestCase
     {
         $manager = $this->getManager();
 
+        //@todo add $defaultConnectionMode and $defaultConnectionName
         $manager->configure(
             $this->className,
             $this->indention,
@@ -88,6 +89,7 @@ class ManagerTest extends PHPUnit_Framework_TestCase
     {
         $manager = $this->getManager();
 
+        //@todo add $defaultConnectionMode and $defaultConnectionName
         $manager->configure(
             $this->className,
             $this->indention,

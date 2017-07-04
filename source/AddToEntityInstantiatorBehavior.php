@@ -23,6 +23,8 @@ require_once($pathToClasses . 'QueryEntity.php');
 class AddToEntityInstantiatorBehavior extends Behavior
 {
     const PARAMETER_ENTITY_ADD_IT_TO_ENTITY_INSTANTIATOR    = 'entity_add_to_entity_instantiator';
+    const PARAMETER_ENTITY_DEFAULT_CONNECTION_MODE          = 'entity_default_connection_mode';
+    const PARAMETER_ENTITY_DEFAULT_CONNECTION_NAME          = 'entity_default_connection_name';
     const PARAMETER_ENTITY_INSTANTIATOR_CLASS_NAME          = 'entity_instantiator_class_name';
     const PARAMETER_ENTITY_INSTANTIATOR_EXTENDS             = 'entity_instantiator_extends';
     const PARAMETER_ENTITY_INSTANTIATOR_INDENTION           = 'entity_instantiator_indention';
@@ -33,6 +35,8 @@ class AddToEntityInstantiatorBehavior extends Behavior
     /** @var array */
     protected $parameters = array(
         self::PARAMETER_ENTITY_ADD_IT_TO_ENTITY_INSTANTIATOR    => 'true',
+        self::PARAMETER_ENTITY_DEFAULT_CONNECTION_MODE          => null,
+        self::PARAMETER_ENTITY_DEFAULT_CONNECTION_NAME          => null,
         self::PARAMETER_ENTITY_INSTANTIATOR_CLASS_NAME          => 'DatabaseEntityInstantiator',
         self::PARAMETER_ENTITY_INSTANTIATOR_INDENTION           => '    ',
         self::PARAMETER_ENTITY_INSTANTIATOR_NAMESPACE           => null,
@@ -142,17 +146,28 @@ class AddToEntityInstantiatorBehavior extends Behavior
             $pathToOutput   = $this->parameters[self::PARAMETER_ENTITY_INSTANTIATOR_PATH_TO_OUTPUT];
             $isAbsolutePath = (strncmp($pathToOutput, DIRECTORY_SEPARATOR, strlen(DIRECTORY_SEPARATOR)) === 0);    //like /foo/bar
             $isResource     = (strpos($pathToOutput, '://') !== false);  //like vfs://
-            $isAbsolutePathOrResource = ($isAbsolutePath || $isResource);
+
+            $isAbsolutePathOrResource   = ($isAbsolutePath || $isResource);
 
             $absolutePathToOutput   = ($isAbsolutePathOrResource)
                 ? $pathToOutput
                 : getcwd() . (str_repeat(DIRECTORY_SEPARATOR . '..', 4)) . DIRECTORY_SEPARATOR . $pathToOutput;
-            $className      = $this->parameters[self::PARAMETER_ENTITY_INSTANTIATOR_CLASS_NAME];
-            $extends        = $this->parameters[self::PARAMETER_ENTITY_INSTANTIATOR_EXTENDS];
-            $indention      = $this->parameters[self::PARAMETER_ENTITY_INSTANTIATOR_INDENTION];
-            $namespace      = $this->parameters[self::PARAMETER_ENTITY_INSTANTIATOR_NAMESPACE];
+            $className              = $this->parameters[self::PARAMETER_ENTITY_INSTANTIATOR_CLASS_NAME];
+            $defaultConnectionMode  = $this->parameters[self::PARAMETER_ENTITY_DEFAULT_CONNECTION_MODE];
+            $defaultConnectionName  = $this->parameters[self::PARAMETER_ENTITY_DEFAULT_CONNECTION_NAME];
+            $extends                = $this->parameters[self::PARAMETER_ENTITY_INSTANTIATOR_EXTENDS];
+            $indention              = $this->parameters[self::PARAMETER_ENTITY_INSTANTIATOR_INDENTION];
+            $namespace              = $this->parameters[self::PARAMETER_ENTITY_INSTANTIATOR_NAMESPACE];
 
-            $manager->configure($className, $indention, $absolutePathToOutput, $namespace, $extends);
+            $manager->configure(
+                $className,
+                $indention,
+                $absolutePathToOutput,
+                $namespace,
+                $extends,
+                $defaultConnectionMode,
+                $defaultConnectionName
+            );
         }
 
         return $manager;
