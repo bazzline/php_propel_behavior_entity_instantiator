@@ -11,7 +11,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 * add a flag to enable or disable "createFoo" generation
 * add a flag to enable or disable "createFooQuery" generation
-* add a flag to not use "use statemens" but fully qualified names to avoid namespace glitches (same classname in different namespaces)
+* add a flag to not use "use statements" but fully qualified names to avoid namespace glitches (same classname in different namespaces)
 * cover code with unit tests
 
 ### To Change
