@@ -21,6 +21,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
+* added optional xml parameter "entity_instantiator_default_connection_mode"
+* added optional xml parameter "entity_instantiator_default_connection_name"
+
 ### Changed
 
 * converted history into dedicated file CHANGELOG.md
