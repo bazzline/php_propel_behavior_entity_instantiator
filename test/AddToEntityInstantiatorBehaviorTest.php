@@ -53,7 +53,7 @@ class AddToEntityInstantiatorBehaviorTest extends PHPUnit_Framework_TestCase
         <parameter name="entity_instantiator_namespace" value="$this->namespace" />
         <parameter name="entity_instantiator_path_to_output" value="$this->path" />
         <parameter name="entity_instantiator_method_name_prefix" value="$this->prefix" />
-        <parameter name="entity_add_to_entity_instantiator" value="true" />
+        <parameter name="entity_instantiator_add_to_entity_instantiator" value="true" />
         <parameter name="entity_default_connection_mode" value="Propel::CONNECTION_READ" />
         <parameter name="entity_default_connection_name" value="my_default_connection_name" />
     </behavior>
@@ -66,7 +66,7 @@ class AddToEntityInstantiatorBehaviorTest extends PHPUnit_Framework_TestCase
         <column name="id" required="true" primaryKey="true" autoIncrement="true" type="INTEGER" />
 
         <behavior name="add_to_entity_instantiator">
-            <parameter name="entity_add_to_entity_instantiator" value="false" />
+            <parameter name="entity_instantiator_add_to_entity_instantiator" value="false" />
         </behavior>
     </table>
 </database>

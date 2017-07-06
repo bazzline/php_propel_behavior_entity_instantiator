@@ -22,19 +22,19 @@ require_once($pathToClasses . 'QueryEntity.php');
  */
 class AddToEntityInstantiatorBehavior extends Behavior
 {
-    const PARAMETER_ENTITY_ADD_IT_TO_ENTITY_INSTANTIATOR    = 'entity_add_to_entity_instantiator';
+    const PARAMETER_ENTITY_INSTANTIATOR_ADD_IT_TO_ENTITY_INSTANTIATOR   = 'entity_instantiator_add_to_entity_instantiator';
     const PARAMETER_ENTITY_DEFAULT_CONNECTION_MODE          = 'entity_default_connection_mode';
     const PARAMETER_ENTITY_DEFAULT_CONNECTION_NAME          = 'entity_default_connection_name';
-    const PARAMETER_ENTITY_INSTANTIATOR_CLASS_NAME          = 'entity_instantiator_class_name';
-    const PARAMETER_ENTITY_INSTANTIATOR_EXTENDS             = 'entity_instantiator_extends';
-    const PARAMETER_ENTITY_INSTANTIATOR_INDENTION           = 'entity_instantiator_indention';
-    const PARAMETER_ENTITY_INSTANTIATOR_NAMESPACE           = 'entity_instantiator_namespace';
-    const PARAMETER_ENTITY_INSTANTIATOR_PATH_TO_OUTPUT      = 'entity_instantiator_path_to_output';
-    const PARAMETER_ENTITY_INSTANTIATOR_METHOD_NAME_PREFIX  = 'entity_instantiator_method_name_prefix';
+    const PARAMETER_ENTITY_INSTANTIATOR_CLASS_NAME                      = 'entity_instantiator_class_name';
+    const PARAMETER_ENTITY_INSTANTIATOR_EXTENDS                         = 'entity_instantiator_extends';
+    const PARAMETER_ENTITY_INSTANTIATOR_INDENTION                       = 'entity_instantiator_indention';
+    const PARAMETER_ENTITY_INSTANTIATOR_NAMESPACE                       = 'entity_instantiator_namespace';
+    const PARAMETER_ENTITY_INSTANTIATOR_PATH_TO_OUTPUT                  = 'entity_instantiator_path_to_output';
+    const PARAMETER_ENTITY_INSTANTIATOR_METHOD_NAME_PREFIX              = 'entity_instantiator_method_name_prefix';
 
     /** @var array */
     protected $parameters = array(
-        self::PARAMETER_ENTITY_ADD_IT_TO_ENTITY_INSTANTIATOR    => 'true',
+        self::PARAMETER_ENTITY_INSTANTIATOR_ADD_IT_TO_ENTITY_INSTANTIATOR    => 'true',
         self::PARAMETER_ENTITY_DEFAULT_CONNECTION_MODE          => null,
         self::PARAMETER_ENTITY_DEFAULT_CONNECTION_NAME          => null,
         self::PARAMETER_ENTITY_INSTANTIATOR_CLASS_NAME          => 'DatabaseEntityInstantiator',
@@ -178,8 +178,8 @@ class AddToEntityInstantiatorBehavior extends Behavior
      */
     private function addIt()
     {
-        return (isset($this->parameters[self::PARAMETER_ENTITY_ADD_IT_TO_ENTITY_INSTANTIATOR]))
-            ? ($this->parameters[self::PARAMETER_ENTITY_ADD_IT_TO_ENTITY_INSTANTIATOR] === 'true')
+        return (isset($this->parameters[self::PARAMETER_ENTITY_INSTANTIATOR_ADD_IT_TO_ENTITY_INSTANTIATOR]))
+            ? ($this->parameters[self::PARAMETER_ENTITY_INSTANTIATOR_ADD_IT_TO_ENTITY_INSTANTIATOR] === 'true')
             : false;
     }
 }

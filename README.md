@@ -34,7 +34,7 @@ The current change log can be found [here](https://github.com/bazzline/php_prope
 * make sure you have `extension=pdo_sqlite.so` enabled if you want to run phpunit
 * the behavior creates a instantiator class and file
 * the behavior has following parameters
-    * `entity_add_to_entity_instantiator` - ("true"|"false") allowed to add or not ad this table to the instantiator, default is `true`
+    * `entity_instantiator_add_to_entity_instantiator` - ("true"|"false") allowed to add or not ad this table to the instantiator, default is `true`
     * `entity_instantiator_class_name` - (string) that represents the class name, default is `DatabaseEntityInstantiator`
     * `entity_instantiator_extends` - (string) that represents the full qualified class name, default is ``
     * `entity_instantiator_indention`- (string) that represents the indention in the instantiator, default is `    `
@@ -63,7 +63,7 @@ Given a database with following settings
         
         <!-- turn it on - default -->
         <behavior name="add_to_entity_instantiator">
-            <parameter name="entity_add_to_entity_instantiator" value="true" />
+            <parameter name="entity_instantiator_add_to_entity_instantiator" value="true" />
         </behavior>
     </table>
     
@@ -73,7 +73,7 @@ Given a database with following settings
         
         <!-- turn it on -->
         <behavior name="add_to_entity_instantiator">
-            <parameter name="entity_add_to_entity_instantiator" value="false" />
+            <parameter name="entity_instantiator_add_to_entity_instantiator" value="false" />
         </behavior>
     </table>
 </database>
