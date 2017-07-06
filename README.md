@@ -21,6 +21,8 @@ It is available at [openhub.net](https://openhub.net/p/php_propel_behavior_entit
 
 If you want to control things in more detail, you should have a look to the [locator generator component for php](https://github.com/bazzline/php_component_locator_generator) and its [propel examples](https://github.com/bazzline/php_component_locator_generator/tree/master/example)
 
+The current change log can be found [here](https://github.com/bazzline/php_propel_behavior_entity_instantiator/blob/master/CHANGELOG.md).
+
 # Why
 
 * no `new` in your code anymore
@@ -82,7 +84,10 @@ will create a file called `MyEntityInstantiator.php` in the path `module/Databas
 ```php
 <?php
 
-namespace Database\Service
+namespace Database\Service;
+
+use PDO;
+use Propel;
 
 /**
  * Class MyEntityInstantiator
@@ -114,7 +119,7 @@ class MyEntityInstantiator extends MyAbstractEntityInstantiator
      */
     public function createUserQuery()
     {   
-        return new Database\UserQuery::create();
+        return new \Database\UserQuery::create();
     }   
 }   
 ```
@@ -145,53 +150,6 @@ propel.behavior.create_entity_instantiator.class = lib.vendor.net_bazzline.php_p
 # API 
 
 [API](http://bazzline.net/eb1538eb38f9635c0b1a1d47b020205681b7b569/index.html) available at [bazzline.net](http://www.bazzline.net)
-
-# History
-
-* upcoming
-    * @todo
-        * add a flag to enable or disable "createFoo" generation
-        * add a flag to enable or disable "createFooQuery" generation
-        * add a flag to not use "use statemens" but fully qualified names to avoid namespace glitches (same classname in different namespaces)
-        * covered code with unit tests
-    * fixed [issue 2](https://github.com/bazzline/php_propel_behavior_entity_instantiator/issues/2)
-    * fixed [issue 3](https://github.com/bazzline/php_propel_behavior_entity_instantiator/issues/3)
-* [1.0.2](https://github.com/bazzline/php_propel_behavior_create_entity/tree/1.0.2) - released at 23.01.2017
-    * updated depenency
-* [1.0.1](https://github.com/bazzline/php_propel_behavior_create_entity/tree/1.0.1) - released at 30.05.2016
-    * updated mockery
-* [1.0.0](https://github.com/bazzline/php_propel_behavior_create_entity/tree/1.0.0) - released at 06.03.2016
-    * added support for php 7.0
-    * removed support for php 5.3.3
-    * updated depenency
-* [0.4.3](https://github.com/bazzline/php_propel_behavior_create_entity/tree/0.4.2) - released at 11.01.2016
-    * fixed dependency handling for phpunit 4.8.*
-* [0.4.2](https://github.com/bazzline/php_propel_behavior_create_entity/tree/0.4.2) - released at 11.12.2015
-    * updated dependencies
-* [0.4.1](https://github.com/bazzline/php_propel_behavior_create_entity/tree/0.4.1) - released at 06.11.2015
-    * updated dependencies
-* [0.4.0](https://github.com/bazzline/php_propel_behavior_create_entity/tree/0.4.0) - released at 20.09.2015
-    * refactor *EntityInstantiatorGenerator* (extracted *generateContent* and *configure* method to delegate responsibilities)
-* [0.3.0](https://github.com/bazzline/php_propel_behavior_create_entity/tree/0.3.0) - released at 18.09.2015
-    * covered "Propel" and "PDO" also with use statements
-    * use statements are ordered alphabetically
-    * use "use" instead and full qualified names usage in the methods
-* [0.2.3](https://github.com/bazzline/php_propel_behavior_create_entity/tree/0.2.3) - released at 17.09.2015
-    * fixed documentation issue
-    * fixed phpdoc issue for generated method *getConnection*
-    * phpdoc optimization when dealing with the `EntityCollection`
-* [0.2.2](https://github.com/bazzline/php_propel_behavior_create_entity/tree/0.2.2) - released at 10.09.2015
-    * refactored `EntityInstantiatorGenerator` internal code generation
-* [0.2.1](https://github.com/bazzline/php_propel_behavior_create_entity/tree/0.2.1) - released at 09.09.2015
-    * added "$name" and "$mode" as optional parameter for "getConnection()"
-* [0.2.0](https://github.com/bazzline/php_propel_behavior_create_entity/tree/0.2.0) - released at 09.09.2015
-    * fixed [issues/1](https://github.com/bazzline/php_propel_behavior_entity_instantiator/issues/1)
-* [0.1.2](https://github.com/bazzline/php_propel_behavior_create_entity/tree/0.1.2) - released at 02.09.2015
-    * changed default method prefix from "databaseName" to "createDatabaseName"
-* [0.1.1](https://github.com/bazzline/php_propel_behavior_create_entity/tree/0.1.1) - released at 31.08.2015
-    * added optional parameter `extends`
-* [0.1.0](https://github.com/bazzline/php_propel_behavior_create_entity/tree/0.1.0) - released at 31.08.2015
-    * initial release
 
 # Final Words
 
