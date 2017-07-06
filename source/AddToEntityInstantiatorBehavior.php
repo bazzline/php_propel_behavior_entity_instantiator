@@ -30,7 +30,7 @@ class AddToEntityInstantiatorBehavior extends Behavior
     const PARAMETER_ENTITY_INSTANTIATOR_INDENTION           = 'entity_instantiator_indention';
     const PARAMETER_ENTITY_INSTANTIATOR_NAMESPACE           = 'entity_instantiator_namespace';
     const PARAMETER_ENTITY_INSTANTIATOR_PATH_TO_OUTPUT      = 'entity_instantiator_path_to_output';
-    const PARAMETER_ENTITY_METHOD_NAME_PREFIX               = 'entity_method_name_prefix';
+    const PARAMETER_ENTITY_INSTANTIATOR_METHOD_NAME_PREFIX  = 'entity_instantiator_method_name_prefix';
 
     /** @var array */
     protected $parameters = array(
@@ -41,7 +41,7 @@ class AddToEntityInstantiatorBehavior extends Behavior
         self::PARAMETER_ENTITY_INSTANTIATOR_INDENTION           => '    ',
         self::PARAMETER_ENTITY_INSTANTIATOR_NAMESPACE           => null,
         self::PARAMETER_ENTITY_INSTANTIATOR_PATH_TO_OUTPUT      => 'data',
-        self::PARAMETER_ENTITY_METHOD_NAME_PREFIX               => null
+        self::PARAMETER_ENTITY_INSTANTIATOR_METHOD_NAME_PREFIX               => null
     );
 
     /**
@@ -128,9 +128,9 @@ class AddToEntityInstantiatorBehavior extends Behavior
      */
     private function returnDatabaseNameIfMethodNamePrefixIsNotProvided(DataModelBuilder $builder)
     {
-        $methodNamePrefix = (is_null($this->parameters[self::PARAMETER_ENTITY_METHOD_NAME_PREFIX]))
+        $methodNamePrefix = (is_null($this->parameters[self::PARAMETER_ENTITY_INSTANTIATOR_METHOD_NAME_PREFIX]))
             ? 'create' . ucfirst($builder->getDatabase()->getName())
-            : $this->parameters[self::PARAMETER_ENTITY_METHOD_NAME_PREFIX];
+            : $this->parameters[self::PARAMETER_ENTITY_INSTANTIATOR_METHOD_NAME_PREFIX];
 
         return $methodNamePrefix;
     }

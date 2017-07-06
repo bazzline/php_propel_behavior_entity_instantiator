@@ -40,7 +40,7 @@ The current change log can be found [here](https://github.com/bazzline/php_prope
     * `entity_instantiator_indention`- (string) that represents the indention in the instantiator, default is `    `
     * `entity_instantiator_namespace`- (string) that represents the namespace in the instantiator, default is `` (no namespace)
     * `entity_instantiator_path_to_output`- (string) that represents the path (relative to `vendor/../`) where the instantiator file will be written, default is `data`
-    * `entity_method_name_prefix`- (string) that represents the prefix for each instantiation method in the instantiator, default is `create<DatabaseName>` 
+    * `entity_instantiator_method_name_prefix`- (string) that represents the prefix for each instantiation method in the instantiator, default is `create<DatabaseName>` 
 
 # Example 
 
@@ -54,7 +54,7 @@ Given a database with following settings
         <parameter name="entity_instantiator_indention" value="  " />
         <parameter name="entity_instantiator_namespace" value="Database\Service" />
         <parameter name="entity_instantiator_path_to_output" value="module/Database/src/Database/Service" />
-        <parameter name="entity_method_name_prefix" value="create" />
+        <parameter name="entity_instantiator_method_name_prefix" value="create" />
     </behavior>
     
     <table name="user">

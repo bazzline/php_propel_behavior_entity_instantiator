@@ -26,6 +26,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * converted history into dedicated file CHANGELOG.md
 * fixed [issue 2](https://github.com/bazzline/php_propel_behavior_entity_instantiator/issues/2)
 * fixed [issue 3](https://github.com/bazzline/php_propel_behavior_entity_instantiator/issues/3)
+* renamed xml parameter "entity_method_name_prefix" to "entity_instantiator_method_name_prefix"
 
 ## [1.0.2](https://github.com/bazzline/php_propel_behavior_create_entity/tree/1.0.2) - released at 23.01.2017
 
