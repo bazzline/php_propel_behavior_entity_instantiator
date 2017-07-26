@@ -12,6 +12,12 @@ class AddToEntityInstantiatorBehaviorTest extends PHPUnit_Framework_TestCase
     private $className;
 
     /** @var string */
+    private $connectionMode;
+
+    /** @var string */
+    private $connectionName;
+
+    /** @var string */
     private $extends;
 
     /** @var string */
@@ -26,24 +32,28 @@ class AddToEntityInstantiatorBehaviorTest extends PHPUnit_Framework_TestCase
     /** @var string */
     private $prefix;
 
+    /**
+     * @todo create two EntityInstantiator classes, one with all values and one with minimum needed values to validate default values
+     */
     protected function setUp()
     {
         //begin of setting runtime environments
         $fileSystem = vfsStream::setup();
 
-        $this->className    = 'ExampleInstantiator';
-        $this->extends      = '\stdClass';
-        $this->indention    = '  ';
-        $this->namespace    = 'Test\Net\Bazzline\Propel';
-        $this->path         = $fileSystem->url();
-        $this->prefix       = 'create';
+        $this->className        = 'ExampleInstantiator';
+        $this->connectionMode   = 'Propel::CONNECTION_READ';
+        $this->connectionName   = 'my_default_connection_name';
+        $this->extends          = '\stdClass';
+        $this->indention        = '  ';
+        $this->namespace        = 'Test\Net\Bazzline\Propel';
+        $this->path             = $fileSystem->url();
+        $this->prefix           = 'create';
         //end of setting runtime environments
 
         $buildIsNeeded = ((!class_exists('TableOne'))
             || (!class_exists('TableTwo')));
 
         if ($buildIsNeeded) {
-
             $schema     = <<<EOF
 <database name="example_database" defaultIdMethod="native">
     <behavior name="add_to_entity_instantiator">
@@ -54,8 +64,10 @@ class AddToEntityInstantiatorBehaviorTest extends PHPUnit_Framework_TestCase
         <parameter name="entity_instantiator_path_to_output" value="$this->path" />
         <parameter name="entity_instantiator_method_name_prefix" value="$this->prefix" />
         <parameter name="entity_instantiator_add_to_entity_instantiator" value="true" />
-        <parameter name="entity_instantiator_default_connection_mode" value="\Propel::CONNECTION_READ" />
-        <parameter name="entity_instantiator_default_connection_name" value="my_default_connection_name" />
+        <!--
+        <parameter name="entity_instantiator_default_connection_mode" value="$this->connectionMode" />
+        <parameter name="entity_instantiator_default_connection_name" value="$this->connectionName" />
+        -->
     </behavior>
 
     <table name="table_one">
@@ -88,7 +100,8 @@ EOF;
     {
         $path = $this->path . DIRECTORY_SEPARATOR . $this->className . '.php';
         $this->assertTrue(file_exists($path));
-echo(file_get_contents($path));
+
+echo(__METHOD__ . PHP_EOL . file_get_contents($path));
         require_once ($path);
     }
 

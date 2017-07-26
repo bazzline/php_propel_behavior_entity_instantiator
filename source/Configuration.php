@@ -22,6 +22,9 @@ class Configuration
     private $extends;
 
     /** @var string */
+    private $filePathToOutput;
+
+    /** @var string */
     private $indention;
 
     /** @var bool */
@@ -29,9 +32,6 @@ class Configuration
 
     /** @var string */
     private $namespace;
-
-    /** @var string */
-    private $pathToOutput;
 
     /**
      * @param string $className
@@ -66,10 +66,14 @@ class Configuration
 
         if (!is_null($defaultConnectionMode)) {
             $this->setDefaultConnectionMode($defaultConnectionMode);
+        } else {
+            $this->setDefaultConnectionMode('Propel::CONNECTION_WRITE');
         }
 
         if (!is_null($defaultConnectionName)) {
-            $this->setDefaultConnectionName($defaultConnectionName);
+            $this->setDefaultConnectionName('\'' . $defaultConnectionName . '\'');
+        } else {
+            $this->setDefaultConnectionName('null');
         }
 
         $this->tryToCreatePathNameToFileOutputOrThrowInvalidArgumentException($pathToOutput);
@@ -126,9 +130,25 @@ class Configuration
     /**
      * @return string
      */
-    public function getPathToOutput()
+    public function getFilePathToOutput()
     {
-        return $this->pathToOutput;
+        return $this->filePathToOutput;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasExtends()
+    {
+        return (!is_null($this->extends));
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasNamespace()
+    {
+        return (!is_null($this->namespace));
     }
 
     /**
@@ -238,6 +258,6 @@ class Configuration
             );
         }
 
-        $this->pathToOutput = $path . DIRECTORY_SEPARATOR . $this->className . '.php';
+        $this->filePathToOutput = $path . DIRECTORY_SEPARATOR . $this->className . '.php';
     }
 }

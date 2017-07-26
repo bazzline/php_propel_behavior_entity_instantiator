@@ -95,7 +95,7 @@ class Manager
         $configuration  = $this->configuration;
         $generator      = $this->generator;
         $collection     = $this->collection;
-        $fileName       = $configuration->getPathToOutput();
+        $fileName       = $configuration->getFilePathToOutput();
         //end of dependencies
 
         $this->throwRuntimeExceptionIfConfigurationIsNotDone();

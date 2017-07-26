@@ -9,12 +9,17 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### To Add
 
-* add a flag to enable or disable "createFoo" generation
-* add a flag to enable or disable "createFooQuery" generation
+* add a flag to enable or disable "createFoo" (ObjectEntity) generation
+    * put flag into configuration
+    * implement switch in FileContentGenerator
+* add a flag to enable or disable "createFooQuery" (QueryEntity) generation
+    * put flag into configuration
+    * implement switch in FileContentGenerator
 * add a flag to not use "use statements" but fully qualified names to avoid namespace glitches (same classname in different namespaces)
-* cover code with unit tests
 
 ### To Change
+
+* extend existing unit tests
 
 ## [Unreleased]
 

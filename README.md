@@ -58,7 +58,7 @@ Given a database with following settings
         <parameter name="entity_instantiator_path_to_output" value="module/Database/src/Database/Service" />
         <parameter name="entity_instantiator_method_name_prefix" value="create" />
         <paramater name="entity_instantiator_default_connection_name" value="exampleDatabase" />
-        <paramater name="entity_instantiator_default_connection_mode" value="\Propel::CONNECTION_READ" />
+        <paramater name="entity_instantiator_default_connection_mode" value="Propel::CONNECTION_READ" />
     </behavior>
     
     <table name="user">

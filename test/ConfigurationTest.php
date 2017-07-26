@@ -27,6 +27,63 @@ class ConfigurationTest extends PHPUnit_Framework_TestCase
         $this->assertFalse($configuration->isNotConfigured());
     }
 
+    public function testMinimumConfiguration()
+    {
+        //begin of dependencies
+        $className      = __CLASS__;
+        $configuration  = $this->getNewConfiguration();
+        $indention      = '   ';
+        $pathToOutput   = __DIR__;
+        //end of dependencies
+
+        //begin of business logic
+        $configuration->configure(
+            $className,
+            $indention,
+            $pathToOutput
+        );
+
+        $this->assertNull($configuration->getExtends());
+        $this->assertEquals($className, $configuration->getClassName());
+        $this->assertEquals('Propel::CONNECTION_WRITE', $configuration->getDefaultConnectionMode());
+        $this->assertEquals('null', $configuration->getDefaultConnectionName());
+        $this->assertEquals($indention, $configuration->getIndention());
+        $this->assertNull($configuration->getNamespace());
+        $this->assertContains($pathToOutput, $configuration->getFilePathToOutput());
+        $this->assertFalse($configuration->hasExtends());
+        $this->assertFalse($configuration->hasNamespace());
+        //end of business logic
+    }
+
+    public function testMaximumConfiguration()
+    {
+        $this->markTestIncomplete('needs to be implemented.');
+        //begin of dependencies
+        $className      = __CLASS__;
+        $configuration  = $this->getNewConfiguration();
+        $indention      = '   ';
+        $pathToOutput   = __DIR__;
+        //end of dependencies
+
+        //begin of business logic
+        $configuration->configure(
+            $className,
+            $indention,
+            $pathToOutput
+        );
+
+        $this->assertNull($configuration->getExtends());
+        $this->assertEquals($className, $configuration->getClassName());
+        $this->assertEquals('Propel::CONNECTION_WRITE', $configuration->getDefaultConnectionMode());
+        $this->assertEquals('null', $configuration->getDefaultConnectionName());
+        $this->assertEquals($indention, $configuration->getIndention());
+        $this->assertNull($configuration->getNamespace());
+        $this->assertContains($pathToOutput, $configuration->getFilePathToOutput());
+        $this->assertFalse($configuration->hasExtends());
+        $this->assertFalse($configuration->hasNamespace());
+        //end of business logic
+    }
+
     /**
      * @return Configuration
      */
