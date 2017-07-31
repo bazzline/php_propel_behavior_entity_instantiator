@@ -43,44 +43,51 @@ class ConfigurationTest extends PHPUnit_Framework_TestCase
             $pathToOutput
         );
 
-        $this->assertNull($configuration->getExtends());
-        $this->assertEquals($className, $configuration->getClassName());
-        $this->assertEquals('Propel::CONNECTION_WRITE', $configuration->getDefaultConnectionMode());
-        $this->assertEquals('null', $configuration->getDefaultConnectionName());
-        $this->assertEquals($indention, $configuration->getIndention());
-        $this->assertNull($configuration->getNamespace());
-        $this->assertContains($pathToOutput, $configuration->getFilePathToOutput());
-        $this->assertFalse($configuration->hasExtends());
-        $this->assertFalse($configuration->hasNamespace());
+        self::assertNull($configuration->getExtends());
+        self::assertEquals($className, $configuration->getClassName());
+        self::assertEquals('Propel::CONNECTION_WRITE', $configuration->getDefaultConnectionMode());
+        self::assertEquals('null', $configuration->getDefaultConnectionName());
+        self::assertEquals($indention, $configuration->getIndention());
+        self::assertNull($configuration->getNamespace());
+        self::assertContains($pathToOutput, $configuration->getFilePathToOutput());
+        self::assertFalse($configuration->hasExtends());
+        self::assertFalse($configuration->hasNamespace());
         //end of business logic
     }
 
     public function testMaximumConfiguration()
     {
-        $this->markTestIncomplete('needs to be implemented.');
         //begin of dependencies
-        $className      = __CLASS__;
-        $configuration  = $this->getNewConfiguration();
-        $indention      = '   ';
-        $pathToOutput   = __DIR__;
+        $className              = __CLASS__;
+        $configuration          = $this->getNewConfiguration();
+        $defaultConnectionName  = 'Propel::CONNECTION_FOO';
+        $defaultConnectionMode  = 'foo_bar';
+        $extends                = 'BarFoo';
+        $indention              = '   ';
+        $pathToOutput           = __DIR__;
+        $namespace              = 'Foo\Bar';
         //end of dependencies
 
         //begin of business logic
         $configuration->configure(
             $className,
             $indention,
-            $pathToOutput
+            $pathToOutput,
+            $namespace,
+            $extends,
+            $defaultConnectionMode,
+            $defaultConnectionName
         );
 
-        $this->assertNull($configuration->getExtends());
-        $this->assertEquals($className, $configuration->getClassName());
-        $this->assertEquals('Propel::CONNECTION_WRITE', $configuration->getDefaultConnectionMode());
-        $this->assertEquals('null', $configuration->getDefaultConnectionName());
-        $this->assertEquals($indention, $configuration->getIndention());
-        $this->assertNull($configuration->getNamespace());
-        $this->assertContains($pathToOutput, $configuration->getFilePathToOutput());
-        $this->assertFalse($configuration->hasExtends());
-        $this->assertFalse($configuration->hasNamespace());
+        self::assertEquals($extends, $configuration->getExtends());
+        self::assertEquals($className, $configuration->getClassName());
+        self::assertEquals($defaultConnectionMode, $configuration->getDefaultConnectionMode());
+        self::assertEquals($defaultConnectionName, $configuration->getDefaultConnectionName());
+        self::assertEquals($indention, $configuration->getIndention());
+        self::assertEquals($namespace, $configuration->getNamespace());
+        self::assertContains($pathToOutput, $configuration->getFilePathToOutput());
+        self::assertTrue($configuration->hasExtends());
+        self::assertTrue($configuration->hasNamespace());
         //end of business logic
     }
 
