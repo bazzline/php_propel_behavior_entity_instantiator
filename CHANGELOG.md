@@ -28,6 +28,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 * added optional xml parameter "entity_instantiator_default_connection_mode"
 * added optional xml parameter "entity_instantiator_default_connection_name"
+* added support for php 7.1
 
 ### Changed
 
