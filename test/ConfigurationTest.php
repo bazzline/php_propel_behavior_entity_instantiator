@@ -82,7 +82,7 @@ class ConfigurationTest extends PHPUnit_Framework_TestCase
         self::assertEquals($extends, $configuration->getExtends());
         self::assertEquals($className, $configuration->getClassName());
         self::assertEquals($defaultConnectionMode, $configuration->getDefaultConnectionMode());
-        self::assertEquals($defaultConnectionName, $configuration->getDefaultConnectionName());
+        self::assertEquals('\'' . $defaultConnectionName . '\'', $configuration->getDefaultConnectionName());
         self::assertEquals($indention, $configuration->getIndention());
         self::assertEquals($namespace, $configuration->getNamespace());
         self::assertContains($pathToOutput, $configuration->getFilePathToOutput());
