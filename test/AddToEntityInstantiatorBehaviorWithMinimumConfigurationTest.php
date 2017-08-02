@@ -86,7 +86,7 @@ EOF;
         }
     }
 
-    public function testInstantiatorFileExists()
+    public function testInstantiatorFileExistsAndContainsExpectedContent()
     {
         $path = $this->path . DIRECTORY_SEPARATOR . $this->className . '.php';
         $this->assertTrue(file_exists($path), $path);
@@ -103,7 +103,7 @@ EOF;
     }
 
     /**
-     * @depends testInstantiatorFileExists
+     * @depends testInstantiatorFileExistsAndContainsExpectedContent
      */
     public function testInstantiatorClassExists()
     {

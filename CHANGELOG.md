@@ -33,6 +33,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 
 * converted history into dedicated file CHANGELOG.md
+* extended code coverage
 * fixed [issue 2](https://github.com/bazzline/php_propel_behavior_entity_instantiator/issues/2)
 * fixed [issue 3](https://github.com/bazzline/php_propel_behavior_entity_instantiator/issues/3)
 * renamed xml parameter "entity_method_name_prefix" to "entity_instantiator_method_name_prefix"
