@@ -100,6 +100,7 @@ class Manager
 
         $this->throwRuntimeExceptionIfConfigurationIsNotDone();
         $content = $generator->generate($collection, $configuration);
+
         $this->tryToWriteContentOrThrowRuntimeException($fileName, $content);
         $this->generationIsDone = true;
     }
