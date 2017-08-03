@@ -12,8 +12,17 @@ class Configuration
     /** @var string */
     private $className;
 
+    /** @var null|string */
+    private $defaultConnectionMode;
+
+    /** @var null|string */
+    private $defaultConnectionName;
+
     /** @var string */
     private $extends;
+
+    /** @var string */
+    private $filePathToOutput;
 
     /** @var string */
     private $indention;
@@ -24,19 +33,25 @@ class Configuration
     /** @var string */
     private $namespace;
 
-    /** @var string */
-    private $pathToOutput;
-
     /**
      * @param string $className
      * @param string $indention
      * @param string $pathToOutput
      * @param null|string $namespace
      * @param null|string $extends
+     * @param null|string $defaultConnectionMode
+     * @param null|string $defaultConnectionName
      * @throws InvalidArgumentException
      */
-    public function configure($className, $indention, $pathToOutput, $namespace = null, $extends = null)
-    {
+    public function configure(
+        $className,
+        $indention,
+        $pathToOutput,
+        $namespace = null,
+        $extends = null,
+        $defaultConnectionMode = null,
+        $defaultConnectionName = null
+    ) {
         $this->setClassName($className);
 
         if (!is_null($extends)) {
@@ -47,6 +62,18 @@ class Configuration
 
         if (!is_null($namespace)) {
             $this->setNamespace($namespace);
+        }
+
+        if (!is_null($defaultConnectionMode)) {
+            $this->setDefaultConnectionMode($defaultConnectionMode);
+        } else {
+            $this->setDefaultConnectionMode('Propel::CONNECTION_WRITE');
+        }
+
+        if (!is_null($defaultConnectionName)) {
+            $this->setDefaultConnectionName('\'' . $defaultConnectionName . '\'');
+        } else {
+            $this->setDefaultConnectionName('null');
         }
 
         $this->tryToCreatePathNameToFileOutputOrThrowInvalidArgumentException($pathToOutput);
@@ -62,7 +89,22 @@ class Configuration
     }
 
     /**
-     * @return string
+     * @return null|string
+     */
+    public function getDefaultConnectionMode()
+    {
+        return $this->defaultConnectionMode;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getDefaultConnectionName()
+    {
+        return $this->defaultConnectionName;
+    }
+    /**
+     * @return null|string
      */
     public function getExtends()
     {
@@ -78,7 +120,7 @@ class Configuration
     }
 
     /**
-     * @return string
+     * @return null|string
      */
     public function getNamespace()
     {
@@ -88,9 +130,25 @@ class Configuration
     /**
      * @return string
      */
-    public function getPathToOutput()
+    public function getFilePathToOutput()
     {
-        return $this->pathToOutput;
+        return $this->filePathToOutput;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasExtends()
+    {
+        return (!is_null($this->extends));
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasNamespace()
+    {
+        return (!is_null($this->namespace));
     }
 
     /**
@@ -116,6 +174,24 @@ class Configuration
     {
         $this->throwInvalidArgumentExceptionIfStringIsNotValid($className);
         $this->className = $className;
+    }
+
+    /**
+     * @param string $defaultConnectionMode
+     */
+    private function setDefaultConnectionMode($defaultConnectionMode)
+    {
+        $this->throwInvalidArgumentExceptionIfStringIsNotValid($defaultConnectionMode);
+        $this->defaultConnectionMode = $defaultConnectionMode;
+    }
+
+    /**
+     * @param string $defaultConnectionName
+     */
+    private function setDefaultConnectionName($defaultConnectionName)
+    {
+        $this->throwInvalidArgumentExceptionIfStringIsNotValid($defaultConnectionName);
+        $this->defaultConnectionName = $defaultConnectionName;
     }
 
     /**
@@ -182,6 +258,6 @@ class Configuration
             );
         }
 
-        $this->pathToOutput = $path . DIRECTORY_SEPARATOR . $this->className . '.php';
+        $this->filePathToOutput = $path . DIRECTORY_SEPARATOR . $this->className . '.php';
     }
 }

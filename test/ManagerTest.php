@@ -20,6 +20,12 @@ class ManagerTest extends PHPUnit_Framework_TestCase
     private $className;
 
     /** @var string */
+    private $defaultConnectionMode;
+
+    /** @var string */
+    private $defaultConnectionName;
+
+    /** @var string */
     private $extends;
 
     /** @var \org\bovigo\vfs\vfsStreamDirectory */
@@ -35,11 +41,13 @@ class ManagerTest extends PHPUnit_Framework_TestCase
     {
         $this->resetGenerator();
 
-        $this->className    = 'ClassName';
-        $this->extends      = 'stdClass';
-        $this->fileSystem   = vfsStream::setup();
-        $this->indention    = '  ';
-        $this->namespace    = 'Name\Space';
+        $this->className                = 'ClassName';
+        $this->defaultConnectionMode    = 'Propel::CONNECTION_WRITE';
+        $this->defaultConnectionName    = 'default_configuration_name';
+        $this->extends                  = 'stdClass';
+        $this->fileSystem               = vfsStream::setup();
+        $this->indention                = '  ';
+        $this->namespace                = 'Name\Space';
     }
 
     protected function tearDown()
@@ -66,22 +74,25 @@ class ManagerTest extends PHPUnit_Framework_TestCase
             $this->indention,
             $this->fileSystem->url(),
             $this->namespace,
-            $this->extends
+            $this->extends,
+            $this->defaultConnectionMode,
+            $this->defaultConnectionName
         );
 
         $manager->generate();
         $filePath       = $this->fileSystem->url() . '/' . $this->className . '.php';
         $fileContent    = file_get_contents($filePath);
 
-        $this->assertTrue(file_exists($filePath));
+        self::assertTrue(file_exists($filePath));
 
-        $this->assertContains('class ' . $this->className, $fileContent);
-        $this->assertContains('extends ' . $this->extends, $fileContent);
-        $this->assertContains($this->indention . 'public function ', $fileContent);
-        $this->assertContains('namespace ' . $this->namespace, $fileContent);
-        $this->assertContains('use Propel;' , $fileContent);
-        $this->assertContains('use PDO;' , $fileContent);
-        $this->assertContains(' Propel::CONNECTION_WRITE' , $fileContent);
+        self::assertContains('class ' . $this->className, $fileContent);
+        self::assertContains('extends ' . $this->extends, $fileContent);
+        self::assertContains($this->indention . 'public function ', $fileContent);
+        self::assertContains('namespace ' . $this->namespace, $fileContent);
+        self::assertContains('use Propel;' , $fileContent);
+        self::assertContains('use PDO;' , $fileContent);
+        self::assertContains('$name = \'' . $this->defaultConnectionName . '\'' , $fileContent);
+        self::assertContains('$mode = ' . $this->defaultConnectionMode , $fileContent);
     }
 
     public function testGenerateWithoutUsingNamespace()
@@ -93,21 +104,25 @@ class ManagerTest extends PHPUnit_Framework_TestCase
             $this->indention,
             $this->fileSystem->url(),
             null,
-            $this->extends
+            $this->extends,
+            $this->defaultConnectionMode,
+            $this->defaultConnectionName
         );
 
         $manager->generate();
         $filePath       = $this->fileSystem->url() . '/' . $this->className . '.php';
         $fileContent    = file_get_contents($filePath);
 
-        $this->assertTrue(file_exists($filePath));
+        self::assertTrue(file_exists($filePath));
 
-        $this->assertContains('class ' . $this->className, $fileContent);
-        $this->assertContains('extends ' . $this->extends, $fileContent);
-        $this->assertContains($this->indention . 'public function ', $fileContent);
-        $this->assertNotContains('namespace', $fileContent);
-        $this->assertNotContains('use Propel;' , $fileContent);
-        $this->assertNotContains('use PDO;' , $fileContent);
+        self::assertContains('class ' . $this->className, $fileContent);
+        self::assertContains('extends ' . $this->extends, $fileContent);
+        self::assertContains($this->indention . 'public function ', $fileContent);
+        self::assertNotContains('namespace', $fileContent);
+        self::assertNotContains('use Propel;' , $fileContent);
+        self::assertNotContains('use PDO;' , $fileContent);
+        self::assertContains('$name = \'' . $this->defaultConnectionName . '\'' , $fileContent);
+        self::assertContains('$mode = ' . $this->defaultConnectionMode , $fileContent);
     }
 
     /**

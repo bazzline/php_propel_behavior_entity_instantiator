@@ -16,12 +16,27 @@ class FileContentGenerator
     {
         $useStatements = $this->generateUseStatements($configuration->getNamespace(), $collection);
 
-        $content = $this->generateFileHeader($configuration->getNamespace(), $useStatements);
-        $content .= $this->generateClassHeader($configuration->getClassName(), $configuration->getExtends());
-        $content .= $this->generateGetConnectionMethod($configuration->getIndention());
+        $content = $this->generateFileHeader(
+            $configuration->getNamespace(),
+            $useStatements
+        );
+
+        $content .= $this->generateClassHeader(
+            $configuration->getClassName(),
+            $configuration->getExtends()
+        );
+
+        $content .= $this->generateGetConnectionMethod(
+            $configuration->getIndention(),
+            $configuration->getDefaultConnectionMode(),
+            $configuration->getDefaultConnectionName()
+        );
 
         foreach ($collection as $entity) {
-            $content .= $this->generateEntityMethods($entity, $configuration->getIndention());
+            $content .= $this->generateObjectEntityOrQueryEntityGetMethod(
+                $entity,
+                $configuration->getIndention()
+            );
         }
 
         $content .= '}';
@@ -31,7 +46,7 @@ class FileContentGenerator
 
     /**
      * @param string $className
-     * @param string $extends
+     * @param null|string $extends
      * @return string
      * @todo find a better way to have it indented and readable
      */
@@ -43,9 +58,9 @@ class FileContentGenerator
 /**
  * Class ' . $className . '
  *
- * @author ' . __NAMESPACE__ . __CLASS__ . '
+ * @author ' . __CLASS__ . '
  * @since ' . date('Y-m-d') . '
- * @see http://www.bazzline.net
+ * @link http://www.bazzline.net
  */
 class ' . $className . $extends . '
 {' . PHP_EOL;
@@ -56,34 +71,39 @@ class ' . $className . $extends . '
      * @param string $indention
      * @return string
      */
-    private function generateEntityMethods(AbstractEntity $entity, $indention)
+    private function generateObjectEntityOrQueryEntityGetMethod(AbstractEntity $entity, $indention)
     {
         $methodName = lcfirst($entity->methodNamePrefix() . ucfirst($entity->className()));
+
         $content   = PHP_EOL .
             $indention . '/**' . PHP_EOL .
             $indention . ' * @return ' . $entity->className() . PHP_EOL .
             $indention . ' */' . PHP_EOL .
             $indention . 'public function ' . $methodName . '()' . PHP_EOL .
             $indention . '{' . PHP_EOL;
+
         if ($entity instanceof ObjectEntity) {
             $content .= $indention . $indention . 'return new ' . $entity->className() . '();' . PHP_EOL;
         } else if ($entity instanceof QueryEntity) {
             $content .= $indention . $indention . 'return ' . $entity->className() . '::create();' . PHP_EOL;
         }
+
         $content .= $indention . '}' . PHP_EOL;
 
         return $content;
     }
 
     /**
-     * @param string $namespace
+     * @param null|string $namespace
      * @param array $uses
      * @return string
      */
     private function generateFileHeader($namespace, $uses)
     {
         $content = '<?php';
-        $content .= ($this->isValidString($namespace)) ? str_repeat(PHP_EOL, 2) . 'namespace ' . $namespace . ';' . PHP_EOL : PHP_EOL;
+        $content .= ($this->isValidString($namespace))
+            ? str_repeat(PHP_EOL, 2) . 'namespace ' . $namespace . ';' . PHP_EOL
+            : PHP_EOL;
 
         $thereAreUseStatements = (!empty($uses));
 
@@ -98,24 +118,31 @@ class ' . $className . $extends . '
 
     /**
      * @param string $indention
+     * @param null|string $defaultConnectionMode
+     * @param null|string $defaultConnectionName
      * @return string
      * @todo find a better way to have it indented and readable
+     * @todo move default values out
      */
-    private function generateGetConnectionMethod($indention)
-    {
+    private function generateGetConnectionMethod(
+        $indention,
+        $defaultConnectionMode = null,
+        $defaultConnectionName = null
+    ) {
+
 return $indention . '/**
 ' . $indention . ' * @param null|string $name - The data source name that is used to look up the DSN from the runtime configuration file.
 ' . $indention . ' * @param string $mode The connection mode (this applies to replication systems).
 ' . $indention . ' * @return PDO
 ' . $indention . ' */
-' . $indention . 'public function getConnection($name = null, $mode = Propel::CONNECTION_WRITE)
+' . $indention . 'public function getConnection($name = ' . $defaultConnectionName . ', $mode = ' . $defaultConnectionMode . ')
 ' . $indention . '{
 ' . (str_repeat($indention, 2)) . 'return Propel::getConnection($name, $mode);
 ' . $indention . '}' . PHP_EOL;
     }
 
     /**
-     * @param string $namespace
+     * @param null|string $namespace
      * @param EntityCollection $collection
      * @return array
      */
