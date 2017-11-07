@@ -28,9 +28,10 @@ class AddToEntityInstantiatorBehavior extends Behavior
     const PARAMETER_ENTITY_INSTANTIATOR_CLASS_NAME                      = 'entity_instantiator_class_name';
     const PARAMETER_ENTITY_INSTANTIATOR_EXTENDS                         = 'entity_instantiator_extends';
     const PARAMETER_ENTITY_INSTANTIATOR_INDENTION                       = 'entity_instantiator_indention';
+    const PARAMETER_ENTITY_INSTANTIATOR_METHOD_NAME_PREFIX              = 'entity_instantiator_method_name_prefix';
     const PARAMETER_ENTITY_INSTANTIATOR_NAMESPACE                       = 'entity_instantiator_namespace';
     const PARAMETER_ENTITY_INSTANTIATOR_PATH_TO_OUTPUT                  = 'entity_instantiator_path_to_output';
-    const PARAMETER_ENTITY_INSTANTIATOR_METHOD_NAME_PREFIX              = 'entity_instantiator_method_name_prefix';
+    const PARAMETER_ENTITY_INSTANTIATOR_USE_FULLY_QUALIFIED_NAME        = 'entity_instantiator_use_fully_qualified_name';
 
     /** @var array */
     protected $parameters = [
@@ -39,9 +40,10 @@ class AddToEntityInstantiatorBehavior extends Behavior
         self::PARAMETER_ENTITY_INSTANTIATOR_DEFAULT_CONNECTION_NAME         => null,
         self::PARAMETER_ENTITY_INSTANTIATOR_CLASS_NAME                      => 'DatabaseEntityInstantiator',
         self::PARAMETER_ENTITY_INSTANTIATOR_INDENTION                       => '    ',
+        self::PARAMETER_ENTITY_INSTANTIATOR_METHOD_NAME_PREFIX              => null,
         self::PARAMETER_ENTITY_INSTANTIATOR_NAMESPACE                       => null,
         self::PARAMETER_ENTITY_INSTANTIATOR_PATH_TO_OUTPUT                  => 'data',
-        self::PARAMETER_ENTITY_INSTANTIATOR_METHOD_NAME_PREFIX              => null
+        self::PARAMETER_ENTITY_INSTANTIATOR_USE_FULLY_QUALIFIED_NAME        => 'false'
     ];
 
 
@@ -167,6 +169,7 @@ class AddToEntityInstantiatorBehavior extends Behavior
             $extends                = $this->parameters[self::PARAMETER_ENTITY_INSTANTIATOR_EXTENDS];
             $indention              = $this->parameters[self::PARAMETER_ENTITY_INSTANTIATOR_INDENTION];
             $namespace              = $this->parameters[self::PARAMETER_ENTITY_INSTANTIATOR_NAMESPACE];
+            $useFullyQualifiedName  = ($this->parameters[self::PARAMETER_ENTITY_INSTANTIATOR_USE_FULLY_QUALIFIED_NAME] === 'true');
 
             $manager->configure(
                 $className,
@@ -175,7 +178,8 @@ class AddToEntityInstantiatorBehavior extends Behavior
                 $namespace,
                 $extends,
                 $defaultConnectionMode,
-                $defaultConnectionName
+                $defaultConnectionName,
+                $useFullyQualifiedName
             );
         }
 

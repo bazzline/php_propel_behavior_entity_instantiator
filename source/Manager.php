@@ -64,6 +64,7 @@ class Manager
      * @param null|string $extends
      * @param null|string $defaultConnectionMode
      * @param null|string $defaultConnectionName
+     * @param null|bool $useFullyQualifiedNames
      * @throws InvalidArgumentException
      */
     public function configure(
@@ -73,7 +74,8 @@ class Manager
         $namespace = null,
         $extends = null,
         $defaultConnectionMode = null,
-        $defaultConnectionName = null
+        $defaultConnectionName = null,
+        $useFullyQualifiedNames = null
     ) {
         $this->configuration->configure(
             $className,
@@ -82,7 +84,8 @@ class Manager
             $namespace,
             $extends,
             $defaultConnectionMode,
-            $defaultConnectionName
+            $defaultConnectionName,
+            $useFullyQualifiedNames
         );
     }
 

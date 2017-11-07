@@ -15,11 +15,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * add a flag to enable or disable "createFooQuery" (QueryEntity) generation
     * put flag into configuration
     * implement switch in FileContentGenerator
-* add a flag to not use "use statements" but fully qualified names to avoid namespace glitches (same classname in different namespaces)
 
 ### To Change
 
-* extend existing unit tests
+* extend existing unit tests 
+    * rename AddToEntityInstantiatorBehaviorTest to IntegrationTest
+    * write unit tests for all existing classes
+    * write a unit test how the generated code behaves if the instantiator is in the same namespace as the class to load (can happen but is currently not supported)
 
 ## [Unreleased]
 

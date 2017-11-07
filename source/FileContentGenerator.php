@@ -17,6 +17,7 @@ class FileContentGenerator
         Configuration $configuration
     ) {
         $useStatements = $this->generateUseStatements(
+            $configuration->doNotUseFullyQualifiedNames(),
             $configuration->getNamespace(),
             $collection
         );
@@ -40,7 +41,8 @@ class FileContentGenerator
         foreach ($collection as $entity) {
             $content .= $this->generateObjectEntityOrQueryEntityGetMethod(
                 $entity,
-                $configuration->getIndention()
+                $configuration->getIndention(),
+                $configuration->useFullyQualifiedNames()
             );
         }
 
@@ -76,15 +78,20 @@ class ' . $className . $extends . '
     /**
      * @param AbstractEntity $entity
      * @param string $indention
+     * @param boolean $useFullyQualifiedName
      * @return string
      */
     private function generateObjectEntityOrQueryEntityGetMethod(
         AbstractEntity $entity,
-        $indention
+        $indention,
+        $useFullyQualifiedName
     ) {
         $methodName = lcfirst($entity->methodNamePrefix() . ucfirst($entity->className()));
+        $className  = ($useFullyQualifiedName)
+            ? '\\' . $entity->fullQualifiedClassName()
+            : $entity->className();
 
-        $content   = PHP_EOL .
+        $content = PHP_EOL .
             $indention . '/**' . PHP_EOL .
             $indention . ' * @return ' . $entity->className() . PHP_EOL .
             $indention . ' */' . PHP_EOL .
@@ -92,9 +99,9 @@ class ' . $className . $extends . '
             $indention . '{' . PHP_EOL;
 
         if ($entity instanceof ObjectEntity) {
-            $content .= $indention . $indention . 'return new ' . $entity->className() . '();' . PHP_EOL;
+            $content .= $indention . $indention . 'return new ' . $className . '();' . PHP_EOL;
         } else if ($entity instanceof QueryEntity) {
-            $content .= $indention . $indention . 'return ' . $entity->className() . '::create();' . PHP_EOL;
+            $content .= $indention . $indention . 'return ' . $className . '::create();' . PHP_EOL;
         }
 
         $content .= $indention . '}' . PHP_EOL;
@@ -153,11 +160,13 @@ return $indention . '/**
     }
 
     /**
+     * @param boolean $includeCollection
      * @param null|string $namespace
      * @param EntityCollection $collection
      * @return array
      */
     private function generateUseStatements(
+        $includeCollection,
         $namespace,
         EntityCollection $collection
     ) {
@@ -168,8 +177,10 @@ return $indention . '/**
             $uses[] = 'use PDO;';
         }
 
-        foreach ($collection as $entity) {
-            $uses[] = 'use ' . $entity->fullQualifiedClassName() . ';';
+        if ($includeCollection) {
+            foreach ($collection as $entity) {
+                $uses[] = 'use ' . $entity->fullQualifiedClassName() . ';';
+            }
         }
 
         natsort($uses);

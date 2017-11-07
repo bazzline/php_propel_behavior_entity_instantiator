@@ -32,6 +32,9 @@ class AddToEntityInstantiatorBehaviorTest extends PHPUnit_Framework_TestCase
     /** @var string */
     private $prefix;
 
+    /** @var bool */
+    private $useFullyQualifiedName;
+
     /**
      * @todo create two EntityInstantiator classes, one with all values and one with minimum needed values to validate default values
      */
@@ -40,14 +43,16 @@ class AddToEntityInstantiatorBehaviorTest extends PHPUnit_Framework_TestCase
         //begin of setting runtime environments
         $fileSystem = vfsStream::setup();
 
-        $this->className        = 'ExampleInstantiator';
-        $this->connectionMode   = 'Propel::CONNECTION_READ';
-        $this->connectionName   = 'my_default_connection_name';
-        $this->extends          = '\stdClass';
-        $this->indention        = '  ';
-        $this->namespace        = 'Test\Net\Bazzline\Propel';
-        $this->path             = $fileSystem->url();
-        $this->prefix           = 'create';
+        $this->className                = 'ExampleInstantiator';
+        $this->connectionMode           = 'Propel::CONNECTION_READ';
+        $this->connectionName           = 'my_default_connection_name';
+        $this->extends                  = '\stdClass';
+        $this->indention                = '  ';
+        $this->namespace                = 'Test\Net\Bazzline\Propel';
+        $this->path                     = $fileSystem->url();
+        $this->prefix                   = 'create';
+        $this->useFullyQualifiedName    = 'false';
+        //$this->useFullyQualifiedName    = 'true';
         //end of setting runtime environments
 
         $buildIsNeeded = ((!class_exists('TableOne'))
@@ -67,6 +72,7 @@ class AddToEntityInstantiatorBehaviorTest extends PHPUnit_Framework_TestCase
         <!--
         <parameter name="entity_instantiator_default_connection_mode" value="$this->connectionMode" />
         <parameter name="entity_instantiator_default_connection_name" value="$this->connectionName" />
+        <parameter name="entity_instantiator_use_fully_qualified_name" value="$this->useFullyQualifiedName" />
         -->
     </behavior>
 
@@ -86,7 +92,10 @@ EOF;
 
             $builder        = new PropelQuickBuilder();
             $configuration  = $builder->getConfig();
-            $configuration->setBuildProperty('behavior.add_to_entity_instantiator.class', __DIR__ . '/../source/AddToEntityInstantiatorBehavior');
+            $configuration->setBuildProperty(
+                'behavior.add_to_entity_instantiator.class',
+                __DIR__ . '/../source/AddToEntityInstantiatorBehavior'
+            );
             $builder->setConfig($configuration);
             $builder->setSchema($schema);
 
