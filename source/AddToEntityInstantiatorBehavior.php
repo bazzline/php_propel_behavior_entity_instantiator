@@ -53,8 +53,9 @@ class AddToEntityInstantiatorBehavior extends Behavior
      * @return string
      * @throws InvalidArgumentException
      */
-    public function queryMethods($builder)
-    {
+    public function queryMethods(
+        $builder
+    ) {
         $this->addQueryToGenerator($builder);
 
         return '';
@@ -67,8 +68,9 @@ class AddToEntityInstantiatorBehavior extends Behavior
      * @return string
      * @throws InvalidArgumentException
      */
-    public function objectMethods($builder)
-    {
+    public function objectMethods(
+        $builder
+    ) {
         $this->addObjectToGenerator($builder);
 
         return '';
@@ -78,8 +80,9 @@ class AddToEntityInstantiatorBehavior extends Behavior
      * @param DataModelBuilder $builder
      * @throws InvalidArgumentException
      */
-    public function addObjectToGenerator(DataModelBuilder $builder)
-    {
+    public function addObjectToGenerator(
+        DataModelBuilder $builder
+    ) {
         if ($this->addIt()) {
             $manager    = $this->getManager();
             $entity     = $this->buildEntityFromObject($builder);
@@ -91,8 +94,9 @@ class AddToEntityInstantiatorBehavior extends Behavior
      * @param DataModelBuilder $builder
      * @throws InvalidArgumentException
      */
-    public function addQueryToGenerator(DataModelBuilder $builder)
-    {
+    public function addQueryToGenerator(
+        DataModelBuilder $builder
+    ) {
         if ($this->addIt()) {
             $manager    = $this->getManager();
             $entity     = $this->buildEntityFromQuery($builder);
@@ -104,8 +108,9 @@ class AddToEntityInstantiatorBehavior extends Behavior
      * @param DataModelBuilder $builder
      * @return ObjectEntity
      */
-    private function buildEntityFromObject(DataModelBuilder $builder)
-    {
+    private function buildEntityFromObject(
+        DataModelBuilder $builder
+    ) {
         $methodNamePrefix = $this->returnDatabaseNameIfMethodNamePrefixIsNotProvided($builder);
 
         return new ObjectEntity(
@@ -120,8 +125,9 @@ class AddToEntityInstantiatorBehavior extends Behavior
      * @param DataModelBuilder $builder
      * @return QueryEntity
      */
-    private function buildEntityFromQuery(DataModelBuilder $builder)
-    {
+    private function buildEntityFromQuery(
+        DataModelBuilder $builder
+    ) {
         $methodNamePrefix = $this->returnDatabaseNameIfMethodNamePrefixIsNotProvided($builder);
 
         return new QueryEntity(
@@ -136,8 +142,9 @@ class AddToEntityInstantiatorBehavior extends Behavior
      * @param DataModelBuilder $builder
      * @return string
      */
-    private function returnDatabaseNameIfMethodNamePrefixIsNotProvided(DataModelBuilder $builder)
-    {
+    private function returnDatabaseNameIfMethodNamePrefixIsNotProvided(
+        DataModelBuilder $builder
+    ) {
         $methodNamePrefix = (is_null($this->parameters[self::PARAMETER_ENTITY_INSTANTIATOR_METHOD_NAME_PREFIX]))
             ? 'create' . ucfirst($builder->getDatabase()->getName())
             : $this->parameters[self::PARAMETER_ENTITY_INSTANTIATOR_METHOD_NAME_PREFIX];

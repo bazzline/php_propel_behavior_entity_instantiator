@@ -19,7 +19,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### To Change
 
 * extend existing unit tests
-    * rename AddToEntityInstantiatorBehaviorTest to IntegrationTest
+    * rename the existing AddToEntityInstantiatorBehavior*Tests to IntegrationTest
     * write unit tests for all existing classes
     * write a unit test how the generated code behaves if the instantiator is in the same namespace as the class to load (can happen but is currently not supported)
 
@@ -29,11 +29,17 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 
+## [1.2.1](https://github.com/bazzline/php_propel_behavior_create_entity/tree/1.2.1) - released at 07.11.2017
+
+### Changed
+
+* fixed errors in the [readme](README.md)
+
 ## [1.2.0](https://github.com/bazzline/php_propel_behavior_create_entity/tree/1.2.0) - released at 07.11.2017
 
 ### Added
 
-* implemented [requested feature](https://github.com/bazzline/php_propel_behavior_entity_instantiator/issues/5)
+* implemented [requested feature](https://github.com/bazzline/php_propel_behavior_entity_instantiator/issues/5) by adding optional parameter `entity_instantiator_use_fully_qualified_name`
 
 ### Changed
 

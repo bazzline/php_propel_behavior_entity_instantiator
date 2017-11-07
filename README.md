@@ -34,7 +34,7 @@ The current change log can be found [here](https://github.com/bazzline/php_prope
 * make sure you have `extension=pdo_sqlite.so` enabled if you want to run phpunit
 * the behavior creates a instantiator class and file
 * the behavior has following parameters
-    * `entity_instantiator_add_to_entity_instantiator` - ("true"|"false") allowed to add or not ad this table to the instantiator, default is `true`
+    * `entity_instantiator_add_to_entity_instantiator` - ("true"|"false") allowed to add or not add this table to the instantiator, default is `true`
     * `entity_instantiator_class_name` - (string) that represents the class name, default is `DatabaseEntityInstantiator`
     * `entity_instantiator_extends` - (string) that represents the full qualified class name, default is ``
     * `entity_instantiator_indention`- (string) that represents the indention in the instantiator, default is `    `
@@ -43,6 +43,7 @@ The current change log can be found [here](https://github.com/bazzline/php_prope
     * `entity_instantiator_method_name_prefix`- (string) that represents the prefix for each instantiation method in the instantiator, default is `create<DatabaseName>` 
     * `entity_instantiator_default_connection_mode` - (string) that represents the content of the second optional argument in Propel::getConnection($name, $mode)
     * `entity_instantiator_default_connection_name` - (string) that represents the content of the first optional argument in Propel::getConnection($name, $mode)
+    * `entity_instantiator_use_fully_qualified_name` - ("true"|"false") allows to switch usage between fully qualified name or class name, default is `false`
 
 # Example 
 
@@ -59,6 +60,7 @@ Given a database with following settings
         <parameter name="entity_instantiator_method_name_prefix" value="create" />
         <paramater name="entity_instantiator_default_connection_name" value="exampleDatabase" />
         <paramater name="entity_instantiator_default_connection_mode" value="Propel::CONNECTION_READ" />
+        <paramater name="entity_instantiator_use_fully_qualified_name" value="true" />
     </behavior>
     
     <table name="user">

@@ -43,6 +43,7 @@ class ConfigurationTest extends PHPUnit_Framework_TestCase
             $pathToOutput
         );
 
+        self::assertTrue($configuration->doNotUseFullyQualifiedNames());
         self::assertNull($configuration->getExtends());
         self::assertEquals($className, $configuration->getClassName());
         self::assertEquals('Propel::CONNECTION_WRITE', $configuration->getDefaultConnectionMode());
@@ -52,6 +53,7 @@ class ConfigurationTest extends PHPUnit_Framework_TestCase
         self::assertContains($pathToOutput, $configuration->getFilePathToOutput());
         self::assertFalse($configuration->hasExtends());
         self::assertFalse($configuration->hasNamespace());
+        self::assertFalse($configuration->useFullyQualifiedNames());
         //end of business logic
     }
 
@@ -66,6 +68,7 @@ class ConfigurationTest extends PHPUnit_Framework_TestCase
         $indention              = '   ';
         $pathToOutput           = __DIR__;
         $namespace              = 'Foo\Bar';
+        $useFullyQualifiedName  = true;
         //end of dependencies
 
         //begin of business logic
@@ -76,9 +79,11 @@ class ConfigurationTest extends PHPUnit_Framework_TestCase
             $namespace,
             $extends,
             $defaultConnectionMode,
-            $defaultConnectionName
+            $defaultConnectionName,
+            $useFullyQualifiedName
         );
 
+        self::assertFalse($configuration->doNotUseFullyQualifiedNames());
         self::assertEquals($extends, $configuration->getExtends());
         self::assertEquals($className, $configuration->getClassName());
         self::assertEquals($defaultConnectionMode, $configuration->getDefaultConnectionMode());
@@ -88,6 +93,7 @@ class ConfigurationTest extends PHPUnit_Framework_TestCase
         self::assertContains($pathToOutput, $configuration->getFilePathToOutput());
         self::assertTrue($configuration->hasExtends());
         self::assertTrue($configuration->hasNamespace());
+        self::assertTrue($configuration->useFullyQualifiedNames());
         //end of business logic
     }
 
