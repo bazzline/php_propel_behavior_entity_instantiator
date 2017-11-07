@@ -15,17 +15,30 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * add a flag to enable or disable "createFooQuery" (QueryEntity) generation
     * put flag into configuration
     * implement switch in FileContentGenerator
-* add a flag to not use "use statements" but fully qualified names to avoid namespace glitches (same classname in different namespaces)
 
 ### To Change
 
 * extend existing unit tests
+    * rename AddToEntityInstantiatorBehaviorTest to IntegrationTest
+    * write unit tests for all existing classes
+    * write a unit test how the generated code behaves if the instantiator is in the same namespace as the class to load (can happen but is currently not supported)
 
 ## [Unreleased]
 
 ### Added
 
 ### Changed
+
+## [1.2.0](https://github.com/bazzline/php_propel_behavior_create_entity/tree/1.2.0) - released at 07.11.2017
+
+### Added
+
+* implemented [requested feature](https://github.com/bazzline/php_propel_behavior_entity_instantiator/issues/5)
+
+### Changed
+
+* styled
+* dropped official support to php lower 5.6
 
 ## [1.1.0](https://github.com/bazzline/php_propel_behavior_create_entity/tree/1.1.0) - released at 03.08.2017
 

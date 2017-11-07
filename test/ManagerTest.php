@@ -5,9 +5,7 @@
  */
 namespace Test\Net\Bazzline\Propel\Behavior\EntityInstantiator;
 
-use Exception;
 use Mockery;
-use Net\Bazzline\Propel\Behavior\EntityInstantiator\EntityCollection;
 use Net\Bazzline\Propel\Behavior\EntityInstantiator\Manager;
 use PHPUnit_Framework_TestCase;
 use org\bovigo\vfs\vfsStream;
@@ -37,6 +35,9 @@ class ManagerTest extends PHPUnit_Framework_TestCase
     /** @var string */
     private $namespace;
 
+    /** @var bool */
+    private $useFullyQualifiedName;
+
     protected function setUp()
     {
         $this->resetGenerator();
@@ -48,6 +49,7 @@ class ManagerTest extends PHPUnit_Framework_TestCase
         $this->fileSystem               = vfsStream::setup();
         $this->indention                = '  ';
         $this->namespace                = 'Name\Space';
+        $this->useFullyQualifiedName    = false;
     }
 
     protected function tearDown()
@@ -76,7 +78,8 @@ class ManagerTest extends PHPUnit_Framework_TestCase
             $this->namespace,
             $this->extends,
             $this->defaultConnectionMode,
-            $this->defaultConnectionName
+            $this->defaultConnectionName,
+            $this->useFullyQualifiedName
         );
 
         $manager->generate();
@@ -106,7 +109,8 @@ class ManagerTest extends PHPUnit_Framework_TestCase
             null,
             $this->extends,
             $this->defaultConnectionMode,
-            $this->defaultConnectionName
+            $this->defaultConnectionName,
+            $this->useFullyQualifiedName
         );
 
         $manager->generate();

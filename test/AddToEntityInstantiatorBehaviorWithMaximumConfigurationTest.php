@@ -32,21 +32,23 @@ class AddToEntityInstantiatorBehaviorTest extends PHPUnit_Framework_TestCase
     /** @var string */
     private $prefix;
 
-
+    /** @var bool */
+    private $useFullyQualifiedName;
 
     protected function setUp()
     {
         //begin of setting runtime environments
         $fileSystem = vfsStream::setup();
 
-        $this->className        = 'ExampleMaximumInstantiator';
-        $this->connectionMode   = 'Propel::CONNECTION_READ';
-        $this->connectionName   = 'my_default_connection_name';
-        $this->extends          = '\stdClass';
-        $this->indention        = '  ';
-        $this->namespace        = 'Test\Net\Bazzline\Propel';
-        $this->path             = $fileSystem->url();
-        $this->prefix           = 'create';
+        $this->className                = 'ExampleMaximumInstantiator';
+        $this->connectionMode           = 'Propel::CONNECTION_READ';
+        $this->connectionName           = 'my_default_connection_name';
+        $this->extends                  = '\stdClass';
+        $this->indention                = '  ';
+        $this->namespace                = 'Test\Net\Bazzline\Propel';
+        $this->path                     = $fileSystem->url();
+        $this->prefix                   = 'create';
+        $this->useFullyQualifiedName    = 'true';
         //end of setting runtime environments
 
         $buildIsNeeded = (
@@ -67,6 +69,7 @@ class AddToEntityInstantiatorBehaviorTest extends PHPUnit_Framework_TestCase
         <parameter name="entity_instantiator_add_to_entity_instantiator" value="true" />
         <parameter name="entity_instantiator_default_connection_mode" value="$this->connectionMode" />
         <parameter name="entity_instantiator_default_connection_name" value="$this->connectionName" />
+        <parameter name="entity_instantiator_use_fully_qualified_name" value="$this->useFullyQualifiedName" />
     </behavior>
 
     <table name="maximum_table_one">
@@ -82,11 +85,15 @@ class AddToEntityInstantiatorBehaviorTest extends PHPUnit_Framework_TestCase
     </table>
 </database>
 EOF;
+
             $builder        = new PropelQuickBuilder();
             $configuration  = $builder->getConfig();
             $manager        = Manager::getInstance();
 
-            $configuration->setBuildProperty('behavior.add_to_entity_instantiator.class', __DIR__ . '/../source/AddToEntityInstantiatorBehavior');
+            $configuration->setBuildProperty(
+                'behavior.add_to_entity_instantiator.class',
+                __DIR__ . '/../source/AddToEntityInstantiatorBehavior'
+            );
             $builder->setConfig($configuration);
             $builder->setSchema($schema);
 

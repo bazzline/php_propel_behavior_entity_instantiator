@@ -26,8 +26,12 @@ abstract class AbstractEntity
      * @param string $fullQualifiedClassName
      * @param string $methodNamePrefix
      */
-    public function __construct($className, $databaseName, $fullQualifiedClassName, $methodNamePrefix)
-    {
+    public function __construct(
+        $className,
+        $databaseName,
+        $fullQualifiedClassName,
+        $methodNamePrefix
+    ) {
         $this->className                = $className;
         $this->databaseName             = $databaseName;
         $this->fullQualifiedClassName   = $fullQualifiedClassName;

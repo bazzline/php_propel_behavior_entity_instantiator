@@ -33,6 +33,9 @@ class Configuration
     /** @var string */
     private $namespace;
 
+    /** @var bool */
+    private $useFullyQualifiedNames;
+
     /**
      * @param string $className
      * @param string $indention
@@ -41,6 +44,7 @@ class Configuration
      * @param null|string $extends
      * @param null|string $defaultConnectionMode
      * @param null|string $defaultConnectionName
+     * @param null|bool $useFullyQualifiedNames
      * @throws InvalidArgumentException
      */
     public function configure(
@@ -50,7 +54,8 @@ class Configuration
         $namespace = null,
         $extends = null,
         $defaultConnectionMode = null,
-        $defaultConnectionName = null
+        $defaultConnectionName = null,
+        $useFullyQualifiedNames = null
     ) {
         $this->setClassName($className);
 
@@ -76,8 +81,22 @@ class Configuration
             $this->setDefaultConnectionName('null');
         }
 
+        if (!is_null($useFullyQualifiedNames)) {
+            $this->setUseFullyQualifiedName($useFullyQualifiedNames);
+        } else {
+            $this->setUseFullyQualifiedName(false);
+        }
+
         $this->tryToCreatePathNameToFileOutputOrThrowInvalidArgumentException($pathToOutput);
         $this->isConfigured = true;
+    }
+
+    /**
+     * @return bool
+     */
+    public function doNotUseFullyQualifiedNames()
+    {
+        return ($this->useFullyQualifiedNames === false);
     }
 
     /**
@@ -168,7 +187,16 @@ class Configuration
     }
 
     /**
+     * @return bool
+     */
+    public function useFullyQualifiedNames()
+    {
+        return ($this->useFullyQualifiedNames === true);
+    }
+
+    /**
      * @param string $className
+     * @throws InvalidArgumentException
      */
     private function setClassName($className)
     {
@@ -178,6 +206,7 @@ class Configuration
 
     /**
      * @param string $defaultConnectionMode
+     * @throws InvalidArgumentException
      */
     private function setDefaultConnectionMode($defaultConnectionMode)
     {
@@ -187,6 +216,7 @@ class Configuration
 
     /**
      * @param string $defaultConnectionName
+     * @throws InvalidArgumentException
      */
     private function setDefaultConnectionName($defaultConnectionName)
     {
@@ -196,6 +226,7 @@ class Configuration
 
     /**
      * @param string $extends
+     * @throws InvalidArgumentException
      */
     private function setExtends($extends)
     {
@@ -205,6 +236,7 @@ class Configuration
 
     /**
      * @param string $indention
+     * @throws InvalidArgumentException
      */
     private function setIndention($indention)
     {
@@ -214,11 +246,26 @@ class Configuration
 
     /**
      * @param string $namespace
+     * @throws InvalidArgumentException
      */
     private function setNamespace($namespace)
     {
         $this->throwInvalidArgumentExceptionIfStringIsNotValid($namespace);
         $this->namespace = $namespace;
+    }
+
+    /**
+     * @param $useFullyQualifiedName
+     * @throws InvalidArgumentException
+     */
+    private function setUseFullyQualifiedName($useFullyQualifiedName)
+    {
+        if (!is_bool($useFullyQualifiedName)) {
+            throw new InvalidArgumentException(
+                'provided variable must be a boolean "' . var_export($useFullyQualifiedName, true) . '"" given'
+            );
+        }
+        $this->useFullyQualifiedNames = $useFullyQualifiedName;
     }
 
     /**
