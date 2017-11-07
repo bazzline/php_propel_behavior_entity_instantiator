@@ -167,8 +167,11 @@ class Configuration
         return (!$this->isConfigured);
     }
 
+
+
     /**
      * @param string $className
+     * @throws InvalidArgumentException
      */
     private function setClassName($className)
     {
@@ -176,8 +179,11 @@ class Configuration
         $this->className = $className;
     }
 
+
+
     /**
      * @param string $defaultConnectionMode
+     * @throws InvalidArgumentException
      */
     private function setDefaultConnectionMode($defaultConnectionMode)
     {
@@ -185,8 +191,11 @@ class Configuration
         $this->defaultConnectionMode = $defaultConnectionMode;
     }
 
+
+
     /**
      * @param string $defaultConnectionName
+     * @throws InvalidArgumentException
      */
     private function setDefaultConnectionName($defaultConnectionName)
     {
@@ -194,8 +203,11 @@ class Configuration
         $this->defaultConnectionName = $defaultConnectionName;
     }
 
+
+
     /**
      * @param string $extends
+     * @throws InvalidArgumentException
      */
     private function setExtends($extends)
     {
@@ -203,8 +215,11 @@ class Configuration
         $this->extends = $extends;
     }
 
+
+
     /**
      * @param string $indention
+     * @throws InvalidArgumentException
      */
     private function setIndention($indention)
     {
@@ -212,8 +227,11 @@ class Configuration
         $this->indention = $indention;
     }
 
+
+
     /**
      * @param string $namespace
+     * @throws InvalidArgumentException
      */
     private function setNamespace($namespace)
     {

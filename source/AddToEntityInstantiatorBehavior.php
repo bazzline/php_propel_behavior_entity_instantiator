@@ -33,20 +33,23 @@ class AddToEntityInstantiatorBehavior extends Behavior
     const PARAMETER_ENTITY_INSTANTIATOR_METHOD_NAME_PREFIX              = 'entity_instantiator_method_name_prefix';
 
     /** @var array */
-    protected $parameters = array(
-        self::PARAMETER_ENTITY_INSTANTIATOR_ADD_IT_TO_ENTITY_INSTANTIATOR    => 'true',
-        self::PARAMETER_ENTITY_INSTANTIATOR_DEFAULT_CONNECTION_MODE          => null,
-        self::PARAMETER_ENTITY_INSTANTIATOR_DEFAULT_CONNECTION_NAME          => null,
-        self::PARAMETER_ENTITY_INSTANTIATOR_CLASS_NAME          => 'DatabaseEntityInstantiator',
-        self::PARAMETER_ENTITY_INSTANTIATOR_INDENTION           => '    ',
-        self::PARAMETER_ENTITY_INSTANTIATOR_NAMESPACE           => null,
-        self::PARAMETER_ENTITY_INSTANTIATOR_PATH_TO_OUTPUT      => 'data',
-        self::PARAMETER_ENTITY_INSTANTIATOR_METHOD_NAME_PREFIX               => null
-    );
+    protected $parameters = [
+        self::PARAMETER_ENTITY_INSTANTIATOR_ADD_IT_TO_ENTITY_INSTANTIATOR   => 'true',
+        self::PARAMETER_ENTITY_INSTANTIATOR_DEFAULT_CONNECTION_MODE         => null,
+        self::PARAMETER_ENTITY_INSTANTIATOR_DEFAULT_CONNECTION_NAME         => null,
+        self::PARAMETER_ENTITY_INSTANTIATOR_CLASS_NAME                      => 'DatabaseEntityInstantiator',
+        self::PARAMETER_ENTITY_INSTANTIATOR_INDENTION                       => '    ',
+        self::PARAMETER_ENTITY_INSTANTIATOR_NAMESPACE                       => null,
+        self::PARAMETER_ENTITY_INSTANTIATOR_PATH_TO_OUTPUT                  => 'data',
+        self::PARAMETER_ENTITY_INSTANTIATOR_METHOD_NAME_PREFIX              => null
+    ];
+
+
 
     /**
      * @param DataModelBuilder $builder
      * @return string
+     * @throws InvalidArgumentException
      */
     public function queryMethods($builder)
     {
@@ -55,9 +58,12 @@ class AddToEntityInstantiatorBehavior extends Behavior
         return '';
     }
 
+
+
     /**
      * @param DataModelBuilder $builder
      * @return string
+     * @throws InvalidArgumentException
      */
     public function objectMethods($builder)
     {
@@ -68,6 +74,7 @@ class AddToEntityInstantiatorBehavior extends Behavior
 
     /**
      * @param DataModelBuilder $builder
+     * @throws InvalidArgumentException
      */
     public function addObjectToGenerator(DataModelBuilder $builder)
     {
@@ -80,6 +87,7 @@ class AddToEntityInstantiatorBehavior extends Behavior
 
     /**
      * @param DataModelBuilder $builder
+     * @throws InvalidArgumentException
      */
     public function addQueryToGenerator(DataModelBuilder $builder)
     {
@@ -137,6 +145,7 @@ class AddToEntityInstantiatorBehavior extends Behavior
 
     /**
      * @return Manager
+     * @throws InvalidArgumentException
      */
     private function getManager()
     {

@@ -79,11 +79,11 @@ class EntityCollectionTest extends PHPUnit_Framework_TestCase
     public function testIterator()
     {
         $collection = $this->getNewCollection();
-        $array      = array(
+        $array      = [
             $this->getNewEntity('method' . __LINE__),
             $this->getNewEntity('method' . __LINE__),
             $this->getNewEntity('method' . __LINE__)
-        );
+        ];
 
         foreach ($array as $entity) {
             $collection->add($entity);
@@ -109,9 +109,10 @@ class EntityCollectionTest extends PHPUnit_Framework_TestCase
      * @param string $methodName
      * @return Mockery\MockInterface|AbstractEntity
      */
-    private function getNewEntity($methodName = 'className')
-    {
-        $entity = Mockery::mock('Net\Bazzline\Propel\Behavior\EntityInstantiator\AbstractEntity');
+    private function getNewEntity(
+        $methodName = 'className'
+    ) {
+        $entity = Mockery::mock(AbstractEntity::class);
 
         $entity->shouldReceive('databaseName')
             ->andReturn('database_name')

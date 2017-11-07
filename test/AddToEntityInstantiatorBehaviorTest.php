@@ -101,7 +101,6 @@ EOF;
         $path = $this->path . DIRECTORY_SEPARATOR . $this->className . '.php';
         $this->assertTrue(file_exists($path));
 
-echo(__METHOD__ . PHP_EOL . file_get_contents($path));
         require_once ($path);
     }
 

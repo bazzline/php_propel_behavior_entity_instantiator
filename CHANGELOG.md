@@ -23,6 +23,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Added
+
+* implemented [requested feature](https://github.com/bazzline/php_propel_behavior_entity_instantiator/issues/5)
+
+### Changed
+
+* styled
+* dropped official support to php lower 5.6
 
 ### Added
 

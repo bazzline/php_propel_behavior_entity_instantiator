@@ -5,9 +5,7 @@
  */
 namespace Test\Net\Bazzline\Propel\Behavior\EntityInstantiator;
 
-use Exception;
 use Mockery;
-use Net\Bazzline\Propel\Behavior\EntityInstantiator\EntityCollection;
 use Net\Bazzline\Propel\Behavior\EntityInstantiator\Manager;
 use PHPUnit_Framework_TestCase;
 use org\bovigo\vfs\vfsStream;

@@ -12,9 +12,14 @@ class FileContentGenerator
      * @param Configuration $configuration
      * @return string
      */
-    public function generate(EntityCollection $collection, Configuration $configuration)
-    {
-        $useStatements = $this->generateUseStatements($configuration->getNamespace(), $collection);
+    public function generate(
+        EntityCollection $collection,
+        Configuration $configuration
+    ) {
+        $useStatements = $this->generateUseStatements(
+            $configuration->getNamespace(),
+            $collection
+        );
 
         $content = $this->generateFileHeader(
             $configuration->getNamespace(),
@@ -50,8 +55,10 @@ class FileContentGenerator
      * @return string
      * @todo find a better way to have it indented and readable
      */
-    private function generateClassHeader($className, $extends)
-    {
+    private function generateClassHeader(
+        $className,
+        $extends
+    ) {
         $extends = ($this->isValidString($extends)) ? ' extends ' . $extends : '';
 
     return '
@@ -71,8 +78,10 @@ class ' . $className . $extends . '
      * @param string $indention
      * @return string
      */
-    private function generateObjectEntityOrQueryEntityGetMethod(AbstractEntity $entity, $indention)
-    {
+    private function generateObjectEntityOrQueryEntityGetMethod(
+        AbstractEntity $entity,
+        $indention
+    ) {
         $methodName = lcfirst($entity->methodNamePrefix() . ucfirst($entity->className()));
 
         $content   = PHP_EOL .
@@ -98,8 +107,10 @@ class ' . $className . $extends . '
      * @param array $uses
      * @return string
      */
-    private function generateFileHeader($namespace, $uses)
-    {
+    private function generateFileHeader(
+        $namespace,
+        $uses
+    ) {
         $content = '<?php';
         $content .= ($this->isValidString($namespace))
             ? str_repeat(PHP_EOL, 2) . 'namespace ' . $namespace . ';' . PHP_EOL
@@ -146,9 +157,11 @@ return $indention . '/**
      * @param EntityCollection $collection
      * @return array
      */
-    private function generateUseStatements($namespace, EntityCollection $collection)
-    {
-        $uses = array();
+    private function generateUseStatements(
+        $namespace,
+        EntityCollection $collection
+    ) {
+        $uses = [];
 
         if ($this->isValidString($namespace)) {
             $uses[] = 'use Propel;';

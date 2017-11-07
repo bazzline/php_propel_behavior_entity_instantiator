@@ -20,16 +20,17 @@ class EntityCollection implements ArrayAccess, Countable, Iterator
 
     public function __construct()
     {
-        $this->entityCollection = array();
-        $this->hashCollection   = array();
+        $this->entityCollection = [];
+        $this->hashCollection   = [];
     }
 
     /**
      * @param AbstractEntity $entity
      * @throws InvalidArgumentException
      */
-    public function add(AbstractEntity $entity)
-    {
+    public function add(
+        AbstractEntity $entity
+    ) {
         $this->throwInvalidArgumentExceptionIfEntityWasAlreadyAdded($entity);
         $this->entityCollection[] = $entity;
     }
@@ -38,8 +39,9 @@ class EntityCollection implements ArrayAccess, Countable, Iterator
      * @param AbstractEntity $entity
      * @throws InvalidArgumentException
      */
-    private function throwInvalidArgumentExceptionIfEntityWasAlreadyAdded(AbstractEntity $entity)
-    {
+    private function throwInvalidArgumentExceptionIfEntityWasAlreadyAdded(
+        AbstractEntity $entity
+    ) {
         $hash = sha1($entity->databaseName() . '_' . $entity->className());
 
         if (isset($this->hashCollection[$hash])) {
