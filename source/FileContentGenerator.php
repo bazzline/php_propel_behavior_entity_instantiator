@@ -93,7 +93,7 @@ class ' . $className . $extends . '
 
         $content = PHP_EOL .
             $indention . '/**' . PHP_EOL .
-            $indention . ' * @return ' . $entity->className() . PHP_EOL .
+            $indention . ' * @return ' . $className . PHP_EOL .
             $indention . ' */' . PHP_EOL .
             $indention . 'public function ' . $methodName . '()' . PHP_EOL .
             $indention . '{' . PHP_EOL;

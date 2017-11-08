@@ -29,6 +29,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 
+## [1.2.2](https://github.com/bazzline/php_propel_behavior_create_entity/tree/1.2.2) - released at 08.11.2017
+
+### Changed
+
+* fixed error in the generated doc-block when fully qualified names are generated ("@return \Foo" instead of "@return Foo")
+
 ## [1.2.1](https://github.com/bazzline/php_propel_behavior_create_entity/tree/1.2.1) - released at 07.11.2017
 
 ### Changed
