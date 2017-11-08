@@ -29,6 +29,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 
+* added "@throws PropelException" into the php doc block of the generated "getConnection" method
+
 ## [1.2.2](https://github.com/bazzline/php_propel_behavior_create_entity/tree/1.2.2) - released at 08.11.2017
 
 ### Changed

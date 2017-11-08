@@ -152,6 +152,7 @@ return $indention . '/**
 ' . $indention . ' * @param null|string $name - The data source name that is used to look up the DSN from the runtime configuration file.
 ' . $indention . ' * @param string $mode The connection mode (this applies to replication systems).
 ' . $indention . ' * @return PDO
+' . $indention . ' * @throws PropelException
 ' . $indention . ' */
 ' . $indention . 'public function getConnection($name = ' . $defaultConnectionName . ', $mode = ' . $defaultConnectionMode . ')
 ' . $indention . '{
@@ -174,6 +175,7 @@ return $indention . '/**
 
         if ($this->isValidString($namespace)) {
             $uses[] = 'use Propel;';
+            $uses[] = 'use PropelException;';
             $uses[] = 'use PDO;';
         }
 
