@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Net\Bazzline\Propel\Behavior\EntityInstantiator;
 
 /**

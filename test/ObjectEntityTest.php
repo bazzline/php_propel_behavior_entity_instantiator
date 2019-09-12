@@ -1,17 +1,17 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Test\Net\Bazzline\Propel\Behavior\EntityInstantiator;
 
 use Net\Bazzline\Propel\Behavior\EntityInstantiator\ObjectEntity;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author stev leibelt <artodeto@bazzline.net>
  * @since 2015-08-31
  */
-class ObjectEntityTest extends PHPUnit_Framework_TestCase
+class ObjectEntityTest extends TestCase
 {
-    public function testConstructor()
+    public function testConstructor(): void
     {
         $className              = 'bar';
         $databaseName           = 'foobar';
@@ -20,9 +20,9 @@ class ObjectEntityTest extends PHPUnit_Framework_TestCase
 
         $entity = new ObjectEntity($className, $databaseName, $fullQualifiedClassName, $methodNamePrefix);
 
-        $this->assertEquals($className, $entity->className());
-        $this->assertEquals($databaseName, $entity->databaseName());
-        $this->assertEquals($fullQualifiedClassName, $entity->fullQualifiedClassName());
-        $this->assertEquals($methodNamePrefix, $entity->methodNamePrefix());
+        static::assertEquals($className, $entity->className());
+        static::assertEquals($databaseName, $entity->databaseName());
+        static::assertEquals($fullQualifiedClassName, $entity->fullQualifiedClassName());
+        static::assertEquals($methodNamePrefix, $entity->methodNamePrefix());
     }
 }

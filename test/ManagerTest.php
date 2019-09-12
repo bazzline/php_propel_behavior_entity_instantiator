@@ -1,18 +1,20 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * @author stev leibelt <artodeto@bazzline.net>
  * @since 2015-08-31
  */
 namespace Test\Net\Bazzline\Propel\Behavior\EntityInstantiator;
 
-use Mockery;
 use Net\Bazzline\Propel\Behavior\EntityInstantiator\Manager;
-use PHPUnit_Framework_TestCase;
 use org\bovigo\vfs\vfsStream;
+use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 use RuntimeException;
 
-class ManagerTest extends PHPUnit_Framework_TestCase
+class ManagerTest extends TestCase
 {
     /** @var string */
     private $className;
@@ -38,7 +40,7 @@ class ManagerTest extends PHPUnit_Framework_TestCase
     /** @var bool */
     private $useFullyQualifiedName;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->resetGenerator();
 
@@ -52,22 +54,15 @@ class ManagerTest extends PHPUnit_Framework_TestCase
         $this->useFullyQualifiedName    = false;
     }
 
-    protected function tearDown()
+    public function testCallingGenerateBeforeCallingConfigure(): void
     {
-        Mockery::close();
-    }
-
-    /**
-     * @expectedException RuntimeException
-     * @expectedExceptionMessage you have to call configure first
-     */
-    public function testCallingGenerateBeforeCallingConfigure()
-    {
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('you have to call configure first');
         $manager = $this->getManager();
         $manager->generate();
     }
 
-    public function testGenerateByUsingNamespace()
+    public function testGenerateByUsingNamespace(): void
     {
         $manager = $this->getManager();
 
@@ -88,17 +83,17 @@ class ManagerTest extends PHPUnit_Framework_TestCase
 
         self::assertTrue(file_exists($filePath));
 
-        self::assertContains('class ' . $this->className, $fileContent);
-        self::assertContains('extends ' . $this->extends, $fileContent);
-        self::assertContains($this->indention . 'public function ', $fileContent);
-        self::assertContains('namespace ' . $this->namespace, $fileContent);
-        self::assertContains('use Propel;' , $fileContent);
-        self::assertContains('use PDO;' , $fileContent);
-        self::assertContains('$name = \'' . $this->defaultConnectionName . '\'' , $fileContent);
-        self::assertContains('$mode = ' . $this->defaultConnectionMode , $fileContent);
+        self::assertStringContainsString('class ' . $this->className, $fileContent);
+        self::assertStringContainsString('extends ' . $this->extends, $fileContent);
+        self::assertStringContainsString($this->indention . 'public function ', $fileContent);
+        self::assertStringContainsString('namespace ' . $this->namespace, $fileContent);
+        self::assertStringContainsString('use Propel;' , $fileContent);
+        self::assertStringContainsString('use PDO;' , $fileContent);
+        self::assertStringContainsString('$name = \'' . $this->defaultConnectionName . '\'' , $fileContent);
+        self::assertStringContainsString('$mode = ' . $this->defaultConnectionMode , $fileContent);
     }
 
-    public function testGenerateWithoutUsingNamespace()
+    public function testGenerateWithoutUsingNamespace(): void
     {
         $manager = $this->getManager();
 
@@ -119,14 +114,14 @@ class ManagerTest extends PHPUnit_Framework_TestCase
 
         self::assertTrue(file_exists($filePath));
 
-        self::assertContains('class ' . $this->className, $fileContent);
-        self::assertContains('extends ' . $this->extends, $fileContent);
-        self::assertContains($this->indention . 'public function ', $fileContent);
-        self::assertNotContains('namespace', $fileContent);
-        self::assertNotContains('use Propel;' , $fileContent);
-        self::assertNotContains('use PDO;' , $fileContent);
-        self::assertContains('$name = \'' . $this->defaultConnectionName . '\'' , $fileContent);
-        self::assertContains('$mode = ' . $this->defaultConnectionMode , $fileContent);
+        self::assertStringContainsString('class ' . $this->className, $fileContent);
+        self::assertStringContainsString('extends ' . $this->extends, $fileContent);
+        self::assertStringContainsString($this->indention . 'public function ', $fileContent);
+        self::assertStringNotContainsString('namespace', $fileContent);
+        self::assertStringNotContainsString('use Propel;' , $fileContent);
+        self::assertStringNotContainsString('use PDO;' , $fileContent);
+        self::assertStringContainsString('$name = \'' . $this->defaultConnectionName . '\'' , $fileContent);
+        self::assertStringContainsString('$mode = ' . $this->defaultConnectionMode , $fileContent);
     }
 
     /**

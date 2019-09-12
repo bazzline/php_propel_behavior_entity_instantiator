@@ -1,12 +1,16 @@
 <?php
+
+declare(strict_types=1);
+
 use Net\Bazzline\Propel\Behavior\EntityInstantiator\Manager;
 use org\bovigo\vfs\vfsStream;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author stev leibelt <artodeto@bazzline.net>
  * @since 2015-08-02
  */
-class AddToEntityInstantiatorBehaviorTest extends PHPUnit_Framework_TestCase
+class AddToEntityInstantiatorBehaviorTest extends TestCase
 {
     /** @var string */
     private $className;
@@ -35,7 +39,7 @@ class AddToEntityInstantiatorBehaviorTest extends PHPUnit_Framework_TestCase
     /** @var bool */
     private $useFullyQualifiedName;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         //begin of setting runtime environments
         $fileSystem = vfsStream::setup();
@@ -105,67 +109,67 @@ EOF;
         }
     }
 
-    public function testInstantiatorFileExistsAndContainsExpectedContent()
+    public function testInstantiatorFileExistsAndContainsExpectedContent(): void
     {
         $path = $this->path . DIRECTORY_SEPARATOR . $this->className . '.php';
-        $this->assertTrue(file_exists($path), $path);
+        static::assertTrue(file_exists($path), $path);
 
         require_once ($path);
 
         $content = file_get_contents($path);
 
-        self::assertContains($this->className, $content);
-        self::assertContains($this->connectionMode, $content);
-        self::assertContains($this->connectionName, $content);
-        self::assertContains($this->extends, $content);
-        self::assertContains($this->indention, $content);
-        self::assertContains($this->namespace, $content);
-        self::assertContains($this->prefix, $content);
+        self::assertStringContainsString($this->className, $content);
+        self::assertStringContainsString($this->connectionMode, $content);
+        self::assertStringContainsString($this->connectionName, $content);
+        self::assertStringContainsString($this->extends, $content);
+        self::assertStringContainsString($this->indention, $content);
+        self::assertStringContainsString($this->namespace, $content);
+        self::assertStringContainsString($this->prefix, $content);
     }
 
     /**
      * @depends testInstantiatorFileExistsAndContainsExpectedContent
      */
-    public function testInstantiatorClassExists()
+    public function testInstantiatorClassExists(): void
     {
         $fullQualifiedClassName = $this->namespace . '\\' . $this->className;
-        $this->assertTrue(class_exists($fullQualifiedClassName));
+        static::assertTrue(class_exists($fullQualifiedClassName));
     }
 
     /**
      * @depends testInstantiatorClassExists
      */
-    public function testInstantiatorExtendsStdClass()
+    public function testInstantiatorExtendsStdClass(): void
     {
         $fullQualifiedClassName = $this->namespace . '\\' . $this->className;
         $instantiator           = new $fullQualifiedClassName();
 
-        $this->assertInstanceOf('stdClass', $instantiator);
+        static::assertInstanceOf('stdClass', $instantiator);
     }
 
     /**
      * @depends testInstantiatorClassExists
      */
-    public function testInstantiatorClassHasExpectedMethods()
+    public function testInstantiatorClassHasExpectedMethods(): void
     {
         $fullQualifiedClassName = $this->namespace . '\\' . $this->className;
 
         $methods = get_class_methods($fullQualifiedClassName);
 
-        $this->assertContains('getConnection', $methods);
-        $this->assertContains('createMaximumTableOne', $methods);
-        $this->assertContains('createMaximumTableOneQuery', $methods);
+        static::assertContains('getConnection', $methods);
+        static::assertContains('createMaximumTableOne', $methods);
+        static::assertContains('createMaximumTableOneQuery', $methods);
     }
 
     /**
      * @depends testInstantiatorClassHasExpectedMethods
      */
-    public function testThatMethodsReturningRightInstances()
+    public function testThatMethodsReturningRightInstances(): void
     {
         $fullQualifiedClassName = $this->namespace . '\\' . $this->className;
         $instantiator           = new $fullQualifiedClassName();
 
-        $this->assertTrue(($instantiator->createMaximumTableOne() instanceof MaximumTableOne));
-        $this->assertTrue(($instantiator->createMaximumTableOneQuery() instanceof MaximumTableOneQuery));
+        static::assertTrue(($instantiator->createMaximumTableOne() instanceof MaximumTableOne));
+        static::assertTrue(($instantiator->createMaximumTableOneQuery() instanceof MaximumTableOneQuery));
     }
 }

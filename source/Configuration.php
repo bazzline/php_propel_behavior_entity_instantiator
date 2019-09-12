@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * @author stev leibelt <artodeto@bazzline.net>
  * @since 2015-09-19
@@ -56,7 +59,7 @@ class Configuration
         $defaultConnectionMode = null,
         $defaultConnectionName = null,
         $useFullyQualifiedNames = null
-    ) {
+    ): void {
         $this->setClassName($className);
 
         if (!is_null($extends)) {
@@ -198,7 +201,7 @@ class Configuration
      * @param string $className
      * @throws InvalidArgumentException
      */
-    private function setClassName($className)
+    private function setClassName($className): void
     {
         $this->throwInvalidArgumentExceptionIfStringIsNotValid($className);
         $this->className = $className;
@@ -208,7 +211,7 @@ class Configuration
      * @param string $defaultConnectionMode
      * @throws InvalidArgumentException
      */
-    private function setDefaultConnectionMode($defaultConnectionMode)
+    private function setDefaultConnectionMode($defaultConnectionMode): void
     {
         $this->throwInvalidArgumentExceptionIfStringIsNotValid($defaultConnectionMode);
         $this->defaultConnectionMode = $defaultConnectionMode;
@@ -218,7 +221,7 @@ class Configuration
      * @param string $defaultConnectionName
      * @throws InvalidArgumentException
      */
-    private function setDefaultConnectionName($defaultConnectionName)
+    private function setDefaultConnectionName($defaultConnectionName): void
     {
         $this->throwInvalidArgumentExceptionIfStringIsNotValid($defaultConnectionName);
         $this->defaultConnectionName = $defaultConnectionName;
@@ -228,7 +231,7 @@ class Configuration
      * @param string $extends
      * @throws InvalidArgumentException
      */
-    private function setExtends($extends)
+    private function setExtends($extends): void
     {
         $this->throwInvalidArgumentExceptionIfStringIsNotValid($extends);
         $this->extends = $extends;
@@ -238,7 +241,7 @@ class Configuration
      * @param string $indention
      * @throws InvalidArgumentException
      */
-    private function setIndention($indention)
+    private function setIndention($indention): void
     {
         $this->throwInvalidArgumentExceptionIfStringIsNotValid($indention);
         $this->indention = $indention;
@@ -248,7 +251,7 @@ class Configuration
      * @param string $namespace
      * @throws InvalidArgumentException
      */
-    private function setNamespace($namespace)
+    private function setNamespace($namespace): void
     {
         $this->throwInvalidArgumentExceptionIfStringIsNotValid($namespace);
         $this->namespace = $namespace;
@@ -258,7 +261,7 @@ class Configuration
      * @param $useFullyQualifiedName
      * @throws InvalidArgumentException
      */
-    private function setUseFullyQualifiedName($useFullyQualifiedName)
+    private function setUseFullyQualifiedName($useFullyQualifiedName): void
     {
         if (!is_bool($useFullyQualifiedName)) {
             throw new InvalidArgumentException(
@@ -272,7 +275,7 @@ class Configuration
      * @param string $string
      * @throws InvalidArgumentException
      */
-    private function throwInvalidArgumentExceptionIfStringIsNotValid($string)
+    private function throwInvalidArgumentExceptionIfStringIsNotValid($string): void
     {
         if (!is_string($string)) {
             throw new InvalidArgumentException(
@@ -291,7 +294,7 @@ class Configuration
      * @param string $path
      * @throws InvalidArgumentException
      */
-    private function tryToCreatePathNameToFileOutputOrThrowInvalidArgumentException($path)
+    private function tryToCreatePathNameToFileOutputOrThrowInvalidArgumentException($path): void
     {
         if (!is_dir($path)) {
             throw new InvalidArgumentException(
