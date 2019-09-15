@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * @author stev leibelt <artodeto@bazzline.net>
  * @since 2015-09-19

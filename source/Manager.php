@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Net\Bazzline\Propel\Behavior\EntityInstantiator;
 
 use InvalidArgumentException;
@@ -51,7 +53,7 @@ class Manager
      * @param AbstractEntity $entity
      * @throws InvalidArgumentException
      */
-    public function add(AbstractEntity $entity)
+    public function add(AbstractEntity $entity): void
     {
         $this->collection->add($entity);
     }
@@ -76,7 +78,7 @@ class Manager
         $defaultConnectionMode = null,
         $defaultConnectionName = null,
         $useFullyQualifiedNames = null
-    ) {
+    ): void {
         $this->configuration->configure(
             $className,
             $indention,
@@ -92,7 +94,7 @@ class Manager
     /**
      * @throws RuntimeException
      */
-    public function generate()
+    public function generate(): void
     {
         //begin of dependencies
         $configuration  = $this->configuration;
@@ -121,7 +123,7 @@ class Manager
         return $this->configuration->isNotConfigured();
     }
 
-    public function reset()
+    public function reset(): void
     {
         $this->collection       = new EntityCollection();
         $this->configuration    = new Configuration();
@@ -136,7 +138,7 @@ class Manager
      * @param string $content
      * @throws RuntimeException
      */
-    private function tryToWriteContentOrThrowRuntimeException($fileName, $content)
+    private function tryToWriteContentOrThrowRuntimeException($fileName, $content): void
     {
         $contentCouldBeNotWritten = (file_put_contents($fileName, $content) === false);
 
@@ -167,7 +169,7 @@ class Manager
     /**
      * @throws RuntimeException
      */
-    private function throwRuntimeExceptionIfConfigurationIsNotDone()
+    private function throwRuntimeExceptionIfConfigurationIsNotDone(): void
     {
         if ($this->isNotConfigured()) {
             throw new RuntimeException(

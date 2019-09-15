@@ -1,12 +1,16 @@
 <?php
+
+declare(strict_types=1);
+
 use Net\Bazzline\Propel\Behavior\EntityInstantiator\Manager;
 use org\bovigo\vfs\vfsStream;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author stev leibelt <artodeto@bazzline.net>
  * @since 2015-08-02
  */
-class AddToEntityInstantiatorBehaviorWithMinimumConfigurationTest extends PHPUnit_Framework_TestCase
+class AddToEntityInstantiatorBehaviorWithMinimumConfigurationTest extends TestCase
 {
     /** @var string */
     private $className;
@@ -26,7 +30,7 @@ class AddToEntityInstantiatorBehaviorWithMinimumConfigurationTest extends PHPUni
     /** @var string */
     private $prefix;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         //begin of setting runtime environments
         $fileSystem = vfsStream::setup();
@@ -86,65 +90,65 @@ EOF;
         }
     }
 
-    public function testInstantiatorFileExistsAndContainsExpectedContent()
+    public function testInstantiatorFileExistsAndContainsExpectedContent(): void
     {
         $path = $this->path . DIRECTORY_SEPARATOR . $this->className . '.php';
-        $this->assertTrue(file_exists($path), $path);
+        static::assertTrue(file_exists($path), $path);
 
         require_once ($path);
 
         $content = file_get_contents($path);
 
-        self::assertContains($this->className, $content);
-        self::assertContains($this->extends, $content);
-        self::assertContains($this->indention, $content);
-        self::assertContains($this->namespace, $content);
-        self::assertContains($this->prefix, $content);
+        self::assertStringContainsString($this->className, $content);
+        self::assertStringContainsString($this->extends, $content);
+        self::assertStringContainsString($this->indention, $content);
+        self::assertStringContainsString($this->namespace, $content);
+        self::assertStringContainsString($this->prefix, $content);
     }
 
     /**
      * @depends testInstantiatorFileExistsAndContainsExpectedContent
      */
-    public function testInstantiatorClassExists()
+    public function testInstantiatorClassExists(): void
     {
         $fullQualifiedClassName = $this->namespace . '\\' . $this->className;
-        $this->assertTrue(class_exists($fullQualifiedClassName));
+        static::assertTrue(class_exists($fullQualifiedClassName));
     }
 
     /**
      * @depends testInstantiatorClassExists
      */
-    public function testInstantiatorExtendsStdClass()
+    public function testInstantiatorExtendsStdClass(): void
     {
         $fullQualifiedClassName = $this->namespace . '\\' . $this->className;
         $instantiator           = new $fullQualifiedClassName();
 
-        $this->assertInstanceOf('stdClass', $instantiator);
+        static::assertInstanceOf('stdClass', $instantiator);
     }
 
     /**
      * @depends testInstantiatorClassExists
      */
-    public function testInstantiatorClassHasExpectedMethods()
+    public function testInstantiatorClassHasExpectedMethods(): void
     {
         $fullQualifiedClassName = $this->namespace . '\\' . $this->className;
 
         $methods = get_class_methods($fullQualifiedClassName);
 
-        $this->assertContains('getConnection', $methods);
-        $this->assertContains('createMinimumTableOne', $methods);
-        $this->assertContains('createMinimumTableOneQuery', $methods);
+        static::assertContains('getConnection', $methods);
+        static::assertContains('createMinimumTableOne', $methods);
+        static::assertContains('createMinimumTableOneQuery', $methods);
     }
 
     /**
      * @depends testInstantiatorClassHasExpectedMethods
      */
-    public function testThatMethodsReturningRightInstances()
+    public function testThatMethodsReturningRightInstances(): void
     {
         $fullQualifiedClassName = $this->namespace . '\\' . $this->className;
         $instantiator           = new $fullQualifiedClassName();
 
-        $this->assertTrue(($instantiator->createMinimumTableOne() instanceof MinimumTableOne));
-        $this->assertTrue(($instantiator->createMinimumTableOneQuery() instanceof MinimumTableOneQuery));
+        static::assertTrue(($instantiator->createMinimumTableOne() instanceof MinimumTableOne));
+        static::assertTrue(($instantiator->createMinimumTableOneQuery() instanceof MinimumTableOneQuery));
     }
 }

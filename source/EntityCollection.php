@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * @author stev leibelt <artodeto@bazzline.net>
  * @since 2015-08-29
@@ -30,7 +33,7 @@ class EntityCollection implements ArrayAccess, Countable, Iterator
      */
     public function add(
         AbstractEntity $entity
-    ) {
+    ): void {
         $this->throwInvalidArgumentExceptionIfEntityWasAlreadyAdded($entity);
         $this->entityCollection[] = $entity;
     }
@@ -41,7 +44,7 @@ class EntityCollection implements ArrayAccess, Countable, Iterator
      */
     private function throwInvalidArgumentExceptionIfEntityWasAlreadyAdded(
         AbstractEntity $entity
-    ) {
+    ): void {
         $hash = sha1($entity->databaseName() . '_' . $entity->className());
 
         if (isset($this->hashCollection[$hash])) {
@@ -100,7 +103,7 @@ class EntityCollection implements ArrayAccess, Countable, Iterator
      * @return void
      * @since 5.0.0
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
         if (is_null($offset)) {
             $this->entityCollection[] = $value;
@@ -118,7 +121,7 @@ class EntityCollection implements ArrayAccess, Countable, Iterator
      * @return void
      * @since 5.0.0
      */
-    public function offsetUnset($offset)
+    public function offsetUnset($offset): void
     {
         unset($this->entityCollection[$offset]);
     }
@@ -159,7 +162,7 @@ class EntityCollection implements ArrayAccess, Countable, Iterator
      * @return void Any returned value is ignored.
      * @since 5.0.0
      */
-    public function next()
+    public function next(): void
     {
         next($this->entityCollection);
     }
@@ -193,7 +196,7 @@ class EntityCollection implements ArrayAccess, Countable, Iterator
      * @return void Any returned value is ignored.
      * @since 5.0.0
      */
-    public function rewind()
+    public function rewind(): void
     {
         reset($this->entityCollection);
     }

@@ -1,19 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 use Net\Bazzline\Propel\Behavior\EntityInstantiator\Manager;
 use Net\Bazzline\Propel\Behavior\EntityInstantiator\ObjectEntity;
 use Net\Bazzline\Propel\Behavior\EntityInstantiator\QueryEntity;
 
-//@todo do we need this if dependencies are managed via composer and composer autoloader?
-$pathToClasses = __DIR__ . '/';
-
-require_once($pathToClasses . 'AbstractEntity.php');
-require_once($pathToClasses . 'Configuration.php');
-require_once($pathToClasses . 'EntityCollection.php');
-require_once($pathToClasses . 'FileContentGenerator.php');
-require_once($pathToClasses . 'Manager.php');
-require_once($pathToClasses . 'ObjectEntity.php');
-require_once($pathToClasses . 'QueryEntity.php');
 
 /**
  * @author stev leibelt <artodeto@bazzline.net>
@@ -22,16 +14,16 @@ require_once($pathToClasses . 'QueryEntity.php');
  */
 class AddToEntityInstantiatorBehavior extends Behavior
 {
-    const PARAMETER_ENTITY_INSTANTIATOR_ADD_IT_TO_ENTITY_INSTANTIATOR   = 'entity_instantiator_add_to_entity_instantiator';
-    const PARAMETER_ENTITY_INSTANTIATOR_DEFAULT_CONNECTION_MODE         = 'entity_instantiator_default_connection_mode';
-    const PARAMETER_ENTITY_INSTANTIATOR_DEFAULT_CONNECTION_NAME         = 'entity_instantiator_default_connection_name';
-    const PARAMETER_ENTITY_INSTANTIATOR_CLASS_NAME                      = 'entity_instantiator_class_name';
-    const PARAMETER_ENTITY_INSTANTIATOR_EXTENDS                         = 'entity_instantiator_extends';
-    const PARAMETER_ENTITY_INSTANTIATOR_INDENTION                       = 'entity_instantiator_indention';
-    const PARAMETER_ENTITY_INSTANTIATOR_METHOD_NAME_PREFIX              = 'entity_instantiator_method_name_prefix';
-    const PARAMETER_ENTITY_INSTANTIATOR_NAMESPACE                       = 'entity_instantiator_namespace';
-    const PARAMETER_ENTITY_INSTANTIATOR_PATH_TO_OUTPUT                  = 'entity_instantiator_path_to_output';
-    const PARAMETER_ENTITY_INSTANTIATOR_USE_FULLY_QUALIFIED_NAME        = 'entity_instantiator_use_fully_qualified_name';
+    public const PARAMETER_ENTITY_INSTANTIATOR_ADD_IT_TO_ENTITY_INSTANTIATOR   = 'entity_instantiator_add_to_entity_instantiator';
+    public const PARAMETER_ENTITY_INSTANTIATOR_DEFAULT_CONNECTION_MODE         = 'entity_instantiator_default_connection_mode';
+    public const PARAMETER_ENTITY_INSTANTIATOR_DEFAULT_CONNECTION_NAME         = 'entity_instantiator_default_connection_name';
+    public const PARAMETER_ENTITY_INSTANTIATOR_CLASS_NAME                      = 'entity_instantiator_class_name';
+    public const PARAMETER_ENTITY_INSTANTIATOR_EXTENDS                         = 'entity_instantiator_extends';
+    public const PARAMETER_ENTITY_INSTANTIATOR_INDENTION                       = 'entity_instantiator_indention';
+    public const PARAMETER_ENTITY_INSTANTIATOR_METHOD_NAME_PREFIX              = 'entity_instantiator_method_name_prefix';
+    public const PARAMETER_ENTITY_INSTANTIATOR_NAMESPACE                       = 'entity_instantiator_namespace';
+    public const PARAMETER_ENTITY_INSTANTIATOR_PATH_TO_OUTPUT                  = 'entity_instantiator_path_to_output';
+    public const PARAMETER_ENTITY_INSTANTIATOR_USE_FULLY_QUALIFIED_NAME        = 'entity_instantiator_use_fully_qualified_name';
 
     /** @var array */
     protected $parameters = [
@@ -82,7 +74,7 @@ class AddToEntityInstantiatorBehavior extends Behavior
      */
     public function addObjectToGenerator(
         DataModelBuilder $builder
-    ) {
+    ): void {
         if ($this->addIt()) {
             $manager    = $this->getManager();
             $entity     = $this->buildEntityFromObject($builder);
@@ -96,7 +88,7 @@ class AddToEntityInstantiatorBehavior extends Behavior
      */
     public function addQueryToGenerator(
         DataModelBuilder $builder
-    ) {
+    ): void {
         if ($this->addIt()) {
             $manager    = $this->getManager();
             $entity     = $this->buildEntityFromQuery($builder);

@@ -17,9 +17,8 @@
     "minimum-stability": "dev",
     "require": {
         "mikey179/vfsStream": "1.6.*",
-        "mockery/mockery": "0.9.*",
-        "php": ">=5.3.3",
-        "phpunit/phpunit": "~4.8||~5.2",
+        "php": ">=7.1",
+        "phpunit/phpunit": "^7.0|^8.0",
         "propel/propel1": "~1.6"
     },
     "license": "LGPL-3.0",
@@ -46,5 +45,8 @@
         "classmap": [
             "source/"
         ]
+    },
+    "require-dev": {
+        "symplify/easy-coding-standard": "^6.1@dev"
     }
 }

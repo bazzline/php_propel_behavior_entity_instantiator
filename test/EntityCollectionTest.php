@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * @author stev leibelt <artodeto@bazzline.net>
  * @since 2015-09-01
@@ -6,33 +9,30 @@
 namespace Test\Net\Bazzline\Propel\Behavior\EntityInstantiator;
 
 use InvalidArgumentException;
-use Mockery;
 use Net\Bazzline\Propel\Behavior\EntityInstantiator\AbstractEntity;
 use Net\Bazzline\Propel\Behavior\EntityInstantiator\EntityCollection;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
-class EntityCollectionTest extends PHPUnit_Framework_TestCase
+class EntityCollectionTest extends TestCase
 {
-    protected function tearDown()
-    {
-        Mockery::close();
-    }
-
-    public function testAdd()
+    public function testAdd(): void
     {
         $collection = $this->getNewCollection();
         $entity     = $this->getNewEntity();
 
         $collection->add($entity);
+
+        static::assertEquals($entity, $collection[0]);
     }
 
     /**
      * @depends testAdd
-     * @expectedException InvalidArgumentException
-     * @expectedExceptionMessage  you are trying to add "className" twice for the database "database_name"
      */
-    public function testAddSameEntityTwice()
+    public function testAddSameEntityTwice(): void
     {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('you are trying to add "className" twice for the database "database_name"');
+
         $collection = $this->getNewCollection();
         $entity     = $this->getNewEntity();
 
@@ -43,40 +43,40 @@ class EntityCollectionTest extends PHPUnit_Framework_TestCase
     /**
      * @depends testAdd
      */
-    public function testArrayAccess()
+    public function testArrayAccess(): void
     {
         $collection = $this->getNewCollection();
         $entity     = $this->getNewEntity();
 
         $collection->add($entity);
 
-        $this->assertTrue($collection->offsetExists(0));
-        $this->assertFalse($collection->offsetExists(1));
+        static::assertTrue($collection->offsetExists(0));
+        static::assertFalse($collection->offsetExists(1));
 
-        $this->assertEquals($entity, $collection->offsetGet(0));
+        static::assertEquals($entity, $collection->offsetGet(0));
 
         $collection->offsetSet(3, $entity);
-        $this->assertTrue($collection->offsetExists(3));
+        static::assertTrue($collection->offsetExists(3));
 
         $collection->offsetUnset(3);
-        $this->assertFalse($collection->offsetExists(3));
+        static::assertFalse($collection->offsetExists(3));
     }
 
     /**
      * @depends testAdd
      */
-    public function testCountable()
+    public function testCountable(): void
     {
         $collection = $this->getNewCollection();
         $entity     = $this->getNewEntity();
 
-        $this->assertEquals(0, $collection->count());
+        static::assertEquals(0, $collection->count());
 
         $collection->add($entity);
-        $this->assertEquals(1, $collection->count());
+        static::assertEquals(1, $collection->count());
     }
 
-    public function testIterator()
+    public function testIterator(): void
     {
         $collection = $this->getNewCollection();
         $array      = [
@@ -91,8 +91,8 @@ class EntityCollectionTest extends PHPUnit_Framework_TestCase
         reset($array);
 
         foreach ($collection as $key => $value) {
-            $this->assertEquals(key($array), $key);
-            $this->assertEquals(current($array), $value);
+            static::assertEquals(key($array), $key);
+            static::assertEquals(current($array), $value);
             next($array);
         }
     }
@@ -105,22 +105,12 @@ class EntityCollectionTest extends PHPUnit_Framework_TestCase
         return new EntityCollection();
     }
 
-    /**
-     * @param string $methodName
-     * @return Mockery\MockInterface|AbstractEntity
-     */
-    private function getNewEntity(
-        $methodName = 'className'
-    ) {
-        $entity = Mockery::mock(AbstractEntity::class);
+    private function getNewEntity(string $methodName = 'className'): AbstractEntity
+    {
+        $entity = $this->prophesize(AbstractEntity::class);
+        $entity->databaseName()->willReturn('database_name');
+        $entity->className()->willReturn($methodName);
 
-        $entity->shouldReceive('databaseName')
-            ->andReturn('database_name')
-            ->byDefault();
-        $entity->shouldReceive('className')
-            ->andReturn($methodName)
-            ->byDefault();
-
-        return $entity;
+        return $entity->reveal();
     }
 }
