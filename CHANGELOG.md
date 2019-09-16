@@ -29,7 +29,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 
+## [2.0.0](https://github.com/bazzline/php_propel_behavior_create_entity/tree/2.0.0) - released at 16.09.2019
+
+### Added
+
+* added [migration](docs/migration/from_1.2.2_to_2.0.0.md) howto
+
+### Changed
+
 * added "@throws PropelException" into the php doc block of the generated "getConnection" method
+* fixed [issue 6](https://github.com/bazzline/php_propel_behavior_entity_instantiator/issues/6)
 
 ## [1.2.2](https://github.com/bazzline/php_propel_behavior_create_entity/tree/1.2.2) - released at 08.11.2017
 
@@ -68,6 +77,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * extended code coverage
 * fixed [issue 2](https://github.com/bazzline/php_propel_behavior_entity_instantiator/issues/2)
 * fixed [issue 3](https://github.com/bazzline/php_propel_behavior_entity_instantiator/issues/3)
+* fixed [issue 6](https://github.com/bazzline/php_propel_behavior_entity_instantiator/issues/6)
 * renamed xml parameter "entity_method_name_prefix" to "entity_instantiator_method_name_prefix"
 * renamed xml parameter "entity_add_to_entity_instantiator" to "entity_instantiator_add_to_entity_instantiator"
 
