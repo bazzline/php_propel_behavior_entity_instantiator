@@ -15,11 +15,17 @@
     ],
     "type": "library",
     "minimum-stability": "dev",
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/tworzenieweb/Propel.git"
+        }
+    ],
     "require": {
         "mikey179/vfsStream": "1.6.*",
         "php": ">=7.1",
         "phpunit/phpunit": "^7.0|^8.0",
-        "propel/propel1": "~1.6"
+        "propel/propel1": "dev-php7.4"
     },
     "license": "LGPL-3.0",
     "authors": [
