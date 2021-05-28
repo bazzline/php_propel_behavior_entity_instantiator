@@ -1,3 +1,7 @@
+# Full Stop
+
+I still like the idea but there is currently no use case to develop it anymore.
+
 # Entity Instantiator Generator Behavior for Propel
 
 This free as in freedom behavior that easy up entity instantiation for your [propel](http://www.propelorm.org) query and object classes.
